@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --color-primary-ink: #1d1d1f;
+  --color-mid-gray: #707070;
+  --color-deep-gray: #474747;
+  --color-hairline: #d6d6d6;
+  --color-canvas: #f5f5f7;
+  --color-paper: #ffffff;
+  --color-cool-wash: #e8e8ed;
+  --color-faded-surface: #fafafc;
+  --color-quiet-dot: #777779;
+  --color-electric-blue: #0071e3;
+  --color-electric-blue-hover: #0077ed;
+  --color-link-blue: #0066cc;
+  --color-ember: #b64400;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Product Finish Swatches */
+  --swatch-blush: #e8d0d0;
+  --swatch-citrus: #dddc8c;
+  --swatch-starlight: #f0e4d3;
+  --swatch-sky: #c8d8e0;
+  --swatch-indigo: #596680;
+  --swatch-midnight: #2e3642;
+  --swatch-silver: #e3e4e5;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-primary-ink);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", var(--font-geist-sans), "Helvetica Neue", sans-serif;
+  letter-spacing: -0.022em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
+
+/* Typography styles matching Refero Design System */
+.display-headline {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -1.44px;
+}
+
+.heading-lg {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.8px;
+}
+
+.heading-md {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.35px;
+}
+
+.subheading-apple {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.007em;
+}
+
+.body-canonical {
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.022em;
+}
+
+.caption-apple {
+  font-size: 14px;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.micro-apple {
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+}
+
+/* Pill CTA Buttons */
+.btn-electric {
+  background-color: var(--color-electric-blue);
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 12px 26px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-electric:hover {
+  background-color: var(--color-electric-blue-hover);
+  transform: scale(1.02);
+}
+
+.btn-wash {
+  background-color: var(--color-canvas);
+  color: var(--color-primary-ink);
+  border-radius: 9999px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-wash:hover {
+  background-color: var(--color-cool-wash);
+}
+
+/* 28px Signature Apple Card rounding */
+.card-apple {
+  border-radius: 28px;
+  background-color: var(--color-canvas);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-apple-white {
+  border-radius: 28px;
+  background-color: var(--color-paper);
+}
+
+/* Tabular figures for pricing and stats */
+.numr {
+  font-feature-settings: "numr";
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-mid-gray);
+}
+
+/* Slim modern blur scrollbar for drawers and modals */
+.slim-blur-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(29, 29, 31, 0.25) transparent;
+}
+
+.slim-blur-scrollbar::-webkit-scrollbar {
+  width: 4.5px;
+}
+
+.slim-blur-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 8px 0;
+}
+
+.slim-blur-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(29, 29, 31, 0.22);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color 0.2s ease;
+}
+
+.slim-blur-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(29, 29, 31, 0.5);
+}
+
