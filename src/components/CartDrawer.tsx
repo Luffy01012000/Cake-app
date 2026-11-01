@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, Trash2, ShieldCheck, ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+import { X, Trash2, ShieldCheck, ArrowRight, Sparkles, CheckCircle2, Minus, Plus, Calendar } from "lucide-react";
 import { CartItem } from "../data/cakes";
+import DatePickerModal from "./DatePickerModal";
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ export default function CartDrawer({
   const [eventDate, setEventDate] = useState("2026-11-28");
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [orderConfirmed, setOrderConfirmed] = useState(false);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   // Disable background page scrollbar when cart drawer is open
   React.useEffect(() => {
@@ -67,6 +69,15 @@ export default function CartDrawer({
     onClose();
   };
 
+  const formattedDate = eventDate
+    ? new Date(eventDate + "T00:00:00").toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "Select date";
+
   return (
     <div
       onClick={onClose}
@@ -80,10 +91,10 @@ export default function CartDrawer({
         <div className="p-6 border-b border-[#f5f5f7] flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-[#1d1d1f] tracking-tight">
-              Your Commission Bag
+              Your Cart
             </h2>
             <span className="text-xs text-[#707070]">
-              {items.length} {items.length === 1 ? "creation" : "creations"}
+              {items.length} {items.length === 1 ? "item" : "items"}
             </span>
           </div>
 
@@ -102,10 +113,10 @@ export default function CartDrawer({
               <CheckCircle2 className="w-10 h-10" />
             </div>
             <h3 className="text-2xl font-bold text-[#1d1d1f]">
-              Commission Reserved
+              Order Confirmed
             </h3>
             <p className="text-sm text-[#707070] max-w-[320px] leading-relaxed">
-              Your order confirmation and pastry consultation schedule have been sent. Our master pâtissier will contact you within 4 hours.
+              Your order confirmation and pastry delivery schedule have been sent. Our master pâtissier will contact you within 4 hours.
             </p>
             <div className="p-4 bg-[#f5f5f7] rounded-2xl w-full text-xs text-[#474747] space-y-1">
               <div className="flex justify-between">
@@ -114,7 +125,7 @@ export default function CartDrawer({
               </div>
               <div className="flex justify-between">
                 <span>Delivery Date:</span>
-                <span className="font-semibold text-[#1d1d1f]">{eventDate}</span>
+                <span className="font-semibold text-[#1d1d1f]">{formattedDate}</span>
               </div>
             </div>
             <button
@@ -128,10 +139,10 @@ export default function CartDrawer({
           <div className="p-8 text-center flex-grow flex flex-col items-center justify-center">
             <Sparkles className="w-10 h-10 text-[#d6d6d6] mb-3" />
             <h3 className="text-lg font-semibold text-[#1d1d1f] mb-1">
-              Your bag is empty
+              Your cart is empty
             </h3>
             <p className="text-sm text-[#707070] mb-6">
-              Explore our occasion collection or design a custom commission in the Atelier.
+              Explore our occasion collection or design a custom cake in the Atelier.
             </p>
             <button
               onClick={onClose}
@@ -164,7 +175,7 @@ export default function CartDrawer({
                       <h4 className="text-sm font-semibold text-[#1d1d1f] truncate">
                         {item.cake.name}
                       </h4>
-                      <span className="text-[20px] sm:text-[22px] font-bold text-[#1d1d1f] numr shrink-0">
+                      <span className="text-[20px] font-bold text-[#1d1d1f] numr shrink-0">
                         ${item.cake.price * item.quantity}
                       </span>
                     </div>
@@ -181,19 +192,26 @@ export default function CartDrawer({
 
                     {/* Quantity & Delete */}
                     <div className="flex items-center justify-between mt-2 pt-2 border-t border-black/5">
-                      <div className="flex items-center gap-2 bg-white rounded-full px-2 py-0.5 border border-[#d6d6d6]/60 text-xs">
+                      {/* Perfectly centered stepper pill */}
+                      <div className="flex items-center bg-white rounded-full h-8 px-1.5 border border-[#d6d6d6] shadow-2xs">
                         <button
+                          type="button"
                           onClick={() => onUpdateQuantity(item.id, -1)}
-                          className="px-1 text-[#707070] hover:text-black cursor-pointer font-bold"
+                          className="w-6 h-6 flex items-center justify-center rounded-full text-[#707070] hover:text-[#1d1d1f] hover:bg-[#f5f5f7] transition-colors cursor-pointer"
+                          aria-label="Decrease quantity"
                         >
-                          -
+                          <Minus className="w-3.5 h-3.5 stroke-[2.25]" />
                         </button>
-                        <span className="numr font-bold text-[13px]">{item.quantity}</span>
+                        <span className="w-7 text-center font-bold text-[14px] text-[#1d1d1f] tabular-nums select-none flex items-center justify-center">
+                          {item.quantity}
+                        </span>
                         <button
+                          type="button"
                           onClick={() => onUpdateQuantity(item.id, 1)}
-                          className="px-1 text-[#707070] hover:text-black cursor-pointer font-bold"
+                          className="w-6 h-6 flex items-center justify-center rounded-full text-[#707070] hover:text-[#1d1d1f] hover:bg-[#f5f5f7] transition-colors cursor-pointer"
+                          aria-label="Increase quantity"
                         >
-                          +
+                          <Plus className="w-3.5 h-3.5 stroke-[2.25]" />
                         </button>
                       </div>
 
@@ -210,17 +228,24 @@ export default function CartDrawer({
               ))}
             </div>
 
-            {/* Event Date Selector */}
-            <div className="p-4 rounded-2xl border border-[#d6d6d6] space-y-2 bg-white">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#707070]">
-                Event / Celebration Date
-              </label>
-              <input
-                type="date"
-                value={eventDate}
-                onChange={(e) => setEventDate(e.target.value)}
-                className="w-full text-sm bg-transparent focus:outline-none font-medium"
-              />
+            {/* Whole-Card Clickable Event Date Selector (Opens Popup Modal Picker) */}
+            <div
+              onClick={() => setIsDatePickerOpen(true)}
+              className="p-4 rounded-2xl border border-[#d6d6d6] hover:border-[#0071e3] transition-all bg-white cursor-pointer group flex items-center justify-between shadow-2xs"
+            >
+              <div className="flex-1 pr-2">
+                <span className="block text-xs font-semibold uppercase tracking-wider text-[#707070] mb-1">
+                  Event / Celebration Date
+                </span>
+                <span className="text-[16px] font-bold text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors block">
+                  {formattedDate}
+                </span>
+                <span className="text-[11px] text-[#707070]">Click anywhere to choose date</span>
+              </div>
+
+              <div className="w-10 h-10 rounded-xl bg-[#f5f5f7] group-hover:bg-[#0071e3]/10 flex items-center justify-center transition-colors">
+                <Calendar className="w-5 h-5 text-[#707070] group-hover:text-[#0071e3] transition-colors" />
+              </div>
             </div>
 
             {/* Complimentary Gift Card Note */}
@@ -267,7 +292,7 @@ export default function CartDrawer({
               </div>
               <div className="flex justify-between items-baseline pt-3 border-t border-[#d6d6d6]/60">
                 <div>
-                  <span className="text-[17px] font-bold text-[#1d1d1f] block">Total Commission</span>
+                  <span className="text-[17px] font-bold text-[#1d1d1f] block">Total Cart Price</span>
                   <span className="text-[12px] text-[#707070]">Includes tax & 4°C logistics</span>
                 </div>
                 <span className="numr text-[28px] sm:text-[32px] font-black tracking-tight text-[#1d1d1f]">
@@ -282,10 +307,10 @@ export default function CartDrawer({
               className="btn-electric w-full py-4 text-[16px] font-semibold cursor-pointer shadow-lg shadow-[#0071e3]/20"
             >
               {isCheckingOut ? (
-                "Encrypting & Reserving Commission..."
+                "Processing Order..."
               ) : (
                 <>
-                  Reserve Commission • ${grandTotal}
+                  Checkout • ${grandTotal}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </>
               )}
@@ -293,6 +318,15 @@ export default function CartDrawer({
           </div>
         )}
       </div>
+
+      {/* Date Picker Popup Modal */}
+      <DatePickerModal
+        isOpen={isDatePickerOpen}
+        onClose={() => setIsDatePickerOpen(false)}
+        selectedDate={eventDate}
+        onSelectDate={(newDate) => setEventDate(newDate)}
+        title="Delivery / Event Date"
+      />
     </div>
   );
 }

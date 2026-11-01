@@ -49,7 +49,7 @@ export default function OccasionTabs({
         {/* Section Header */}
         <div className="mb-12">
           <div className="text-[13px] uppercase tracking-wider text-[#707070] font-medium mb-2">
-            The Commission Collection
+            The Cake Collection
           </div>
           <h2 className="text-[32px] sm:text-[44px] font-semibold text-[#1d1d1f] tracking-tight mb-4">
             Cakes engineered for milestone moments.

@@ -53,7 +53,7 @@ export default function CakeModal({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm animate-fade-in cursor-pointer"
     >
       <div
-        className="relative w-full max-w-[880px] max-h-[92vh] overflow-y-auto bg-white rounded-[28px] p-6 sm:p-10 shadow-2xl transition-all cursor-default slim-blur-scrollbar"
+        className="relative w-full max-w-[880px] max-h-[92vh] overflow-y-auto bg-white rounded-[28px] p-6 sm:p-10 shadow-2xl transition-all cursor-default modal-seamless-scrollbar"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -110,7 +110,7 @@ export default function CakeModal({
 
               {/* Prominent Bold Pricing */}
               <div className="flex items-baseline gap-2 mb-6">
-                <span className="text-xs uppercase tracking-wider text-[#707070] font-semibold">Commission:</span>
+                <span className="text-xs uppercase tracking-wider text-[#707070] font-semibold">Price:</span>
                 <span className="text-3xl sm:text-4xl font-black text-[#1d1d1f] numr tracking-tight">
                   ${cake.price}
                 </span>

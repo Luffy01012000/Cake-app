@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Sparkles, Check, Calendar, ArrowRight, ShieldCheck, Heart } from "lucide-react";
 import { CakeProduct, FLAVOR_PALETTES } from "../data/cakes";
+import DatePickerModal from "./DatePickerModal";
 
 interface AtelierConfiguratorProps {
   onAddCustomCake: (customItem: {
@@ -27,6 +28,7 @@ export default function AtelierConfigurator({
   const [deliveryDate, setDeliveryDate] = useState<string>("2026-11-20");
   const [dietary, setDietary] = useState<string>("Standard Gourmet");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const tierOptions = [
     {
@@ -201,7 +203,7 @@ export default function AtelierConfigurator({
             <div className="pt-6 mt-6 border-t border-[#d6d6d6]/60">
               <div className="flex items-baseline justify-between mb-4">
                 <div>
-                  <span className="text-xs text-[#707070] block uppercase tracking-wider font-semibold">Commission Total</span>
+                  <span className="text-xs text-[#707070] block uppercase tracking-wider font-semibold">Total Custom Price</span>
                   <span className="text-4xl sm:text-5xl font-black text-[#1d1d1f] numr tracking-tight">${calculatedPrice}</span>
                 </div>
                 <span className="text-xs text-[#707070] text-right">Includes custom plaque & temperature courier</span>
@@ -219,12 +221,12 @@ export default function AtelierConfigurator({
                 {isSuccess ? (
                   <>
                     <Check className="w-5 h-5" />
-                    Custom Commission Added to Bag
+                    Custom Cake Added to Bag
                   </>
                 ) : (
                   <>
                     <Sparkles className="w-5 h-5 text-white/80" />
-                    Commission This Piece
+                    Add Custom Cake • ${calculatedPrice}
                   </>
                 )}
               </button>
@@ -369,17 +371,28 @@ export default function AtelierConfigurator({
                 />
               </div>
 
-              <div>
-                <label className="block text-[13px] uppercase tracking-wider text-[#707070] font-semibold mb-2">
-                  Delivery / Event Date
-                </label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={deliveryDate}
-                    onChange={(e) => setDeliveryDate(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl border border-[#d6d6d6] text-[14px] focus:outline-none focus:border-[#0071e3]"
-                  />
+              {/* Whole-Field Clickable Date Selector (Opens Popup Modal Picker) */}
+              <div
+                onClick={() => setIsDatePickerOpen(true)}
+                className="px-4 py-2.5 rounded-xl border border-[#d6d6d6] hover:border-[#0071e3] transition-all bg-white cursor-pointer group flex items-center justify-between select-none shadow-2xs hover:shadow-xs"
+              >
+                <div className="flex-1">
+                  <span className="block text-[11px] uppercase tracking-wider text-[#707070] font-semibold cursor-pointer">
+                    Delivery / Event Date
+                  </span>
+                  <div className="text-[14px] font-bold text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors mt-0.5">
+                    {deliveryDate
+                      ? new Date(deliveryDate + "T00:00:00").toLocaleDateString("en-US", {
+                          weekday: "short",
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })
+                      : "Select date"}
+                  </div>
+                </div>
+                <div className="w-8 h-8 rounded-lg bg-[#f5f5f7] group-hover:bg-[#0071e3]/10 flex items-center justify-center transition-colors">
+                  <Calendar className="w-4 h-4 text-[#707070] group-hover:text-[#0071e3] transition-colors" />
                 </div>
               </div>
             </div>
@@ -388,6 +401,15 @@ export default function AtelierConfigurator({
 
         </div>
       </div>
+
+      {/* Date Picker Popup Modal */}
+      <DatePickerModal
+        isOpen={isDatePickerOpen}
+        onClose={() => setIsDatePickerOpen(false)}
+        selectedDate={deliveryDate}
+        onSelectDate={(newDate) => setDeliveryDate(newDate)}
+        title="Atelier Delivery Date"
+      />
     </section>
   );
 }

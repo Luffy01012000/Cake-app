@@ -82,7 +82,7 @@ export default function VariantShowcase({
 
             <div className="flex items-center justify-between pt-6 border-t border-[#d6d6d6]/60">
               <div>
-                <span className="text-[11px] uppercase text-[#707070] font-semibold block tracking-wider">Commission</span>
+                <span className="text-[11px] uppercase text-[#707070] font-semibold block tracking-wider">Price</span>
                 <span className="text-[28px] sm:text-[32px] font-black text-[#1d1d1f] numr tracking-tight">
                   ${blushCake.price}
                 </span>
@@ -148,7 +148,7 @@ export default function VariantShowcase({
 
             <div className="flex items-center justify-between pt-6 border-t border-[#d6d6d6]/60">
               <div>
-                <span className="text-[11px] uppercase text-[#707070] font-semibold block tracking-wider">Commission</span>
+                <span className="text-[11px] uppercase text-[#707070] font-semibold block tracking-wider">Price</span>
                 <span className="text-[28px] sm:text-[32px] font-black text-[#1d1d1f] numr tracking-tight">
                   ${midnightCake.price}
                 </span>

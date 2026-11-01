@@ -136,8 +136,9 @@ body {
 
 /* Tabular figures for pricing and stats */
 .numr {
-  font-feature-settings: "numr";
+  font-feature-settings: "tnum";
   font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
 }
 
 /* Custom scrollbars */
@@ -181,5 +182,30 @@ body {
 
 .slim-blur-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(29, 29, 31, 0.5);
+}
+
+/* Seamless subtle matching scrollbar for quick-view modal */
+.modal-seamless-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.08) transparent;
+}
+
+.modal-seamless-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-seamless-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 12px 0;
+}
+
+.modal-seamless-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.modal-seamless-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
