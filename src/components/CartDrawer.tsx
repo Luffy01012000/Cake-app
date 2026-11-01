@@ -29,6 +29,15 @@ export default function CartDrawer({
   const [orderConfirmed, setOrderConfirmed] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
+  React.useEffect(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 4);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    setEventDate(`${y}-${m}-${day}`);
+  }, []);
+
   // Disable background page scrollbar when cart drawer is open
   React.useEffect(() => {
     if (isOpen) {

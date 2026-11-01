@@ -30,6 +30,15 @@ export default function AtelierConfigurator({
   const [isSuccess, setIsSuccess] = useState(false);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
+  React.useEffect(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 5);
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    setDeliveryDate(`${y}-${m}-${day}`);
+  }, []);
+
   const tierOptions = [
     {
       tiers: 1,

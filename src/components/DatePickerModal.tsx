@@ -18,19 +18,26 @@ export default function DatePickerModal({
   onSelectDate,
   title = "Select Event Date",
 }: DatePickerModalProps) {
-  const initialDate = selectedDate ? new Date(selectedDate + "T00:00:00") : new Date();
+  const [todayDateStr, setTodayDateStr] = useState("2026-11-01");
+  const [currentYear, setCurrentYear] = useState(2026);
+  const [currentMonth, setCurrentMonth] = useState(10); // 0-indexed
+  const [tempDate, setTempDate] = useState(selectedDate || "2026-11-01");
 
-  const [currentYear, setCurrentYear] = useState(initialDate.getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(initialDate.getMonth()); // 0-indexed
-  const [tempDate, setTempDate] = useState(selectedDate);
-
-  // Sync internal state whenever modal opens or selectedDate changes
+  // Sync internal state and compute client-side date boundary inside useEffect
   React.useEffect(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = today.getMonth();
+    const d = today.getDate();
+    const todayStr = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+    setTodayDateStr(todayStr);
+
     if (isOpen) {
-      const d = selectedDate ? new Date(selectedDate + "T00:00:00") : new Date();
-      setCurrentYear(d.getFullYear());
-      setCurrentMonth(d.getMonth());
-      setTempDate(selectedDate);
+      const validDate = selectedDate && selectedDate >= todayStr ? selectedDate : todayStr;
+      const targetDate = new Date(validDate + "T00:00:00");
+      setCurrentYear(targetDate.getFullYear());
+      setCurrentMonth(targetDate.getMonth());
+      setTempDate(validDate);
     }
   }, [isOpen, selectedDate]);
 
@@ -46,6 +53,12 @@ export default function DatePickerModal({
 
   if (!isOpen) return null;
 
+  const todayYear = parseInt(todayDateStr.split("-")[0], 10);
+  const todayMonth = parseInt(todayDateStr.split("-")[1], 10) - 1;
+
+  const isCurrentMonthOrPast =
+    currentYear < todayYear || (currentYear === todayYear && currentMonth <= todayMonth);
+
   const nextMonth = () => {
     if (currentMonth === 11) {
       setCurrentMonth(0);
@@ -56,6 +69,7 @@ export default function DatePickerModal({
   };
 
   const prevMonth = () => {
+    if (isCurrentMonthOrPast) return;
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear((y) => y - 1);
@@ -76,11 +90,13 @@ export default function DatePickerModal({
     const y = currentYear;
     const m = String(currentMonth + 1).padStart(2, "0");
     const d = String(day).padStart(2, "0");
-    setTempDate(`${y}-${m}-${d}`);
+    const thisDateStr = `${y}-${m}-${d}`;
+    if (thisDateStr < todayDateStr) return; // Disallow selecting past dates
+    setTempDate(thisDateStr);
   };
 
   const handleConfirm = () => {
-    if (tempDate) {
+    if (tempDate && tempDate >= todayDateStr) {
       onSelectDate(tempDate);
     }
     onClose();
@@ -158,7 +174,12 @@ export default function DatePickerModal({
           <button
             type="button"
             onClick={prevMonth}
-            className="w-8 h-8 rounded-full hover:bg-[#f5f5f7] flex items-center justify-center text-[#707070] hover:text-[#1d1d1f] transition-colors cursor-pointer"
+            disabled={isCurrentMonthOrPast}
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+              isCurrentMonthOrPast
+                ? "text-[#d6d6d6] cursor-not-allowed opacity-30"
+                : "text-[#707070] hover:text-[#1d1d1f] hover:bg-[#f5f5f7] cursor-pointer"
+            }`}
             aria-label="Previous month"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -199,17 +220,24 @@ export default function DatePickerModal({
             const m = String(currentMonth + 1).padStart(2, "0");
             const d = String(day).padStart(2, "0");
             const thisDateStr = `${y}-${m}-${d}`;
+            const isPast = thisDateStr < todayDateStr;
+            const isToday = thisDateStr === todayDateStr;
             const isSelected = tempDate === thisDateStr;
 
             return (
               <button
                 key={day}
                 type="button"
-                onClick={() => handleDayClick(day)}
-                className={`w-9 h-9 mx-auto rounded-full text-[13px] font-semibold flex items-center justify-center transition-all cursor-pointer ${
-                  isSelected
-                    ? "bg-[#0071e3] text-white shadow-sm"
-                    : "text-[#1d1d1f] hover:bg-[#f5f5f7]"
+                disabled={isPast}
+                onClick={() => !isPast && handleDayClick(day)}
+                className={`w-9 h-9 mx-auto rounded-full text-[13px] font-semibold flex items-center justify-center transition-all ${
+                  isPast
+                    ? "text-[#c7c7cc] cursor-not-allowed opacity-35"
+                    : isSelected
+                    ? "bg-[#0071e3] text-white shadow-sm cursor-pointer"
+                    : isToday
+                    ? "text-[#0071e3] font-bold border border-[#0071e3]/30 hover:bg-[#f5f5f7] cursor-pointer"
+                    : "text-[#1d1d1f] hover:bg-[#f5f5f7] cursor-pointer"
                 }`}
               >
                 {day}
