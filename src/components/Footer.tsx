@@ -11,11 +11,11 @@ export default function Footer({
   onOpenConfigurator: () => void;
 }) {
   return (
-    <footer className="w-full bg-[#f5f5f7] text-[#707070] text-[12px] pt-14 pb-16 border-t border-[#d6d6d6]/40">
+    <footer className="w-full bg-[#f5f5f7] dark:bg-[#121214] text-[#707070] dark:text-[#a1a1a6] text-[12px] pt-14 pb-16 border-t border-[#d6d6d6]/40 dark:border-[#2c2c2e] transition-colors">
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
         
         {/* Footnote Disclaimers */}
-        <div className="space-y-2.5 pb-8 border-b border-[#d6d6d6]/60 leading-relaxed font-normal">
+        <div className="space-y-2.5 pb-8 border-b border-[#d6d6d6]/60 dark:border-[#2c2c2e] leading-relaxed font-normal">
           <p>
             1. Bespoke Commissions: All tiered occasion cakes are handcrafted to order in our Parisian-trained laboratory. Please allow minimum lead times (24 hours for single tiers, 5 to 7 business days for multi-tier wedding centerpieces).
           </p>
@@ -28,9 +28,9 @@ export default function Footer({
         </div>
 
         {/* Directory Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-b border-[#d6d6d6]/60">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-b border-[#d6d6d6]/60 dark:border-[#2c2c2e]">
           <div>
-            <h4 className="text-[12px] font-semibold text-[#1d1d1f] mb-3">
+            <h4 className="text-[12px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">
               Occasions
             </h4>
             <ul className="space-y-2">
@@ -41,7 +41,7 @@ export default function Footer({
                       onSelectOccasion(occ);
                       document.getElementById("occasions-catalog")?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="hover:text-[#1d1d1f] hover:underline cursor-pointer"
+                    className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline cursor-pointer"
                   >
                     {occ} Cakes
                   </button>
@@ -51,30 +51,30 @@ export default function Footer({
           </div>
 
           <div>
-            <h4 className="text-[12px] font-semibold text-[#1d1d1f] mb-3">
+            <h4 className="text-[12px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">
               Atelier & Services
             </h4>
             <ul className="space-y-2">
               <li>
                 <button
                   onClick={onOpenConfigurator}
-                  className="hover:text-[#1d1d1f] hover:underline cursor-pointer"
+                  className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline cursor-pointer"
                 >
                   Cake Architecture Studio
                 </button>
               </li>
               <li>
-                <a href="#occasions-catalog" className="hover:text-[#1d1d1f] hover:underline">
+                <a href="#occasions-catalog" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
                   Private Tasting Flight
                 </a>
               </li>
               <li>
-                <span className="hover:text-[#1d1d1f] cursor-pointer">
+                <span className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer">
                   Venue Logistics & Staging
                 </span>
               </li>
               <li>
-                <span className="hover:text-[#1d1d1f] cursor-pointer">
+                <span className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer">
                   Dietary & Allergens Guide
                 </span>
               </li>
@@ -82,7 +82,7 @@ export default function Footer({
           </div>
 
           <div>
-            <h4 className="text-[12px] font-semibold text-[#1d1d1f] mb-3">
+            <h4 className="text-[12px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">
               Flavors & Terroir
             </h4>
             <ul className="space-y-2">
@@ -95,7 +95,7 @@ export default function Footer({
           </div>
 
           <div>
-            <h4 className="text-[12px] font-semibold text-[#1d1d1f] mb-3">
+            <h4 className="text-[12px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">
               AURA Flagships
             </h4>
             <ul className="space-y-2">
@@ -108,18 +108,18 @@ export default function Footer({
         </div>
 
         {/* Legal & Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#707070]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#707070] dark:text-[#8e8e93]">
           <div>
             Copyright © 2026 AURA Pâtisserie Haute Couture Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-4 text-[11px]">
-            <span className="hover:underline cursor-pointer">Privacy Policy</span>
+            <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Privacy Policy</span>
             <span>•</span>
-            <span className="hover:underline cursor-pointer">Terms of Commission</span>
+            <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Terms of Commission</span>
             <span>•</span>
-            <span className="hover:underline cursor-pointer">Sales & Refunds</span>
+            <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Sales & Refunds</span>
             <span>•</span>
-            <span className="hover:underline cursor-pointer">Legal</span>
+            <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Legal</span>
           </div>
         </div>
 
