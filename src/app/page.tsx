@@ -135,7 +135,7 @@ export default function Home() {
   const cartTotalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <main className="min-h-screen bg-[#ffffff] selection:bg-[#0071e3] selection:text-white">
+    <main className="min-h-screen bg-[#ffffff] dark:bg-[#000000] selection:bg-[#0071e3] dark:selection:bg-[#2997ff] selection:text-white transition-colors duration-200">
       {/* 1. Promo Ribbon */}
       <PromoRibbon onOpenConsultation={handleOrderTastingFlight} />
 

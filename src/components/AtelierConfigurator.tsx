@@ -123,19 +123,19 @@ export default function AtelierConfigurator({
   return (
     <section
       id="atelier-configurator"
-      className="w-full bg-[#f5f5f7] py-24 sm:py-32"
+      className="w-full bg-[#f5f5f7] dark:bg-[#121214] py-24 sm:py-32 transition-colors"
     >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-8">
         {/* Section Header */}
         <div className="text-center max-w-[800px] mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 text-[13px] uppercase tracking-wider text-[#0071e3] font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 text-[13px] uppercase tracking-wider text-[#0071e3] dark:text-[#2997ff] font-semibold mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             Atelier Bespoke Studio
           </div>
-          <h2 className="heading-md text-[#1d1d1f] mb-4">
+          <h2 className="heading-md text-[#1d1d1f] dark:text-[#f5f5f7] mb-4">
             Architect your own occasion centerpiece.
           </h2>
-          <p className="body-canonical text-[#707070]">
+          <p className="body-canonical text-[#707070] dark:text-[#a1a1a6]">
             Customize every millimeter: choose your occasion, structural tiers, gourmet flavor symphony,
             and hand-lettered gold inscription.
           </p>
@@ -145,19 +145,19 @@ export default function AtelierConfigurator({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
           {/* Left Column: Live Visual Render & Summary (5 cols) */}
-          <div className="lg:col-span-5 sticky top-20 bg-white rounded-[28px] p-8 shadow-sm flex flex-col justify-between">
+          <div className="lg:col-span-5 sticky top-20 bg-white dark:bg-[#1c1c1e] border border-transparent dark:border-[#2c2c2e] rounded-[28px] p-8 shadow-sm flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-[12px] uppercase tracking-wider text-[#707070] font-semibold">
+                <span className="text-[12px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold">
                   Live Atelier Render
                 </span>
-                <span className="text-[13px] font-medium text-[#0071e3] bg-[#0071e3]/10 px-3 py-1 rounded-full">
+                <span className="text-[13px] font-medium text-[#0071e3] dark:text-[#2997ff] bg-[#0071e3]/10 dark:bg-[#2997ff]/15 px-3 py-1 rounded-full">
                   {occasion}
                 </span>
               </div>
 
               {/* Live Image based on Tiers */}
-              <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden bg-[#f5f5f7] mb-6">
+              <div className="relative aspect-[4/3] rounded-[20px] overflow-hidden bg-[#f5f5f7] dark:bg-[#161618] mb-6">
                 <Image
                   src={currentTier.image}
                   alt={currentTier.name}
@@ -165,57 +165,57 @@ export default function AtelierConfigurator({
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   className="object-cover"
                 />
-                <div className="absolute bottom-3 left-3 right-3 bg-white/90 backdrop-blur-md p-3 rounded-xl border border-white/60 text-xs">
-                  <div className="font-semibold text-[#1d1d1f] truncate">
+                <div className="absolute bottom-3 left-3 right-3 bg-white/90 dark:bg-black/75 backdrop-blur-md p-3 rounded-xl border border-white/60 dark:border-white/10 text-xs">
+                  <div className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] truncate">
                     Inscription: &ldquo;{inscription || "No Custom Inscription"}&rdquo;
                   </div>
-                  <div className="text-[#707070] text-[11px] mt-0.5 truncate">
+                  <div className="text-[#707070] dark:text-[#a1a1a6] text-[11px] mt-0.5 truncate">
                     {selectedFlavor.name} • {selectedFinish.name}
                   </div>
                 </div>
               </div>
 
               {/* Spec sheet */}
-              <div className="space-y-3 pt-2 text-[14px] text-[#474747]">
-                <div className="flex justify-between py-2 border-b border-[#f5f5f7]">
-                  <span className="text-[#707070]">Structural Build</span>
-                  <span className="font-semibold text-[#1d1d1f]">
+              <div className="space-y-3 pt-2 text-[14px] text-[#474747] dark:text-[#d1d1d6]">
+                <div className="flex justify-between py-2 border-b border-[#f5f5f7] dark:border-[#2c2c2e]">
+                  <span className="text-[#707070] dark:text-[#a1a1a6]">Structural Build</span>
+                  <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
                     {currentTier.name} ({tiers} {tiers === 1 ? "Tier" : "Tiers"})
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-[#f5f5f7]">
-                  <span className="text-[#707070]">Servings</span>
-                  <span className="font-semibold text-[#1d1d1f]">{currentTier.servings}</span>
+                <div className="flex justify-between py-2 border-b border-[#f5f5f7] dark:border-[#2c2c2e]">
+                  <span className="text-[#707070] dark:text-[#a1a1a6]">Servings</span>
+                  <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">{currentTier.servings}</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-[#f5f5f7]">
-                  <span className="text-[#707070]">Flavor Symphony</span>
-                  <span className="font-semibold text-[#1d1d1f] text-right max-w-[200px] truncate">
+                <div className="flex justify-between py-2 border-b border-[#f5f5f7] dark:border-[#2c2c2e]">
+                  <span className="text-[#707070] dark:text-[#a1a1a6]">Flavor Symphony</span>
+                  <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] text-right max-w-[200px] truncate">
                     {selectedFlavor.name}
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-[#f5f5f7]">
-                  <span className="text-[#707070]">Finishing Art</span>
-                  <span className="font-semibold text-[#1d1d1f] text-right max-w-[200px] truncate">
+                <div className="flex justify-between py-2 border-b border-[#f5f5f7] dark:border-[#2c2c2e]">
+                  <span className="text-[#707070] dark:text-[#a1a1a6]">Finishing Art</span>
+                  <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] text-right max-w-[200px] truncate">
                     {selectedFinish.name}
                   </span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-[#707070]">Delivery Chamber</span>
-                  <span className="font-semibold text-[#1d1d1f] flex items-center gap-1">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 inline" /> Climate-controlled
+                  <span className="text-[#707070] dark:text-[#a1a1a6]">Delivery Chamber</span>
+                  <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] flex items-center gap-1">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 inline" /> Climate-controlled
                   </span>
                 </div>
               </div>
             </div>
 
             {/* Total & Action */}
-            <div className="pt-6 mt-6 border-t border-[#d6d6d6]/60">
+            <div className="pt-6 mt-6 border-t border-[#d6d6d6]/60 dark:border-[#2c2c2e]">
               <div className="flex items-baseline justify-between mb-4">
                 <div>
-                  <span className="text-xs text-[#707070] block uppercase tracking-wider font-semibold">Total Custom Price</span>
-                  <span className="text-4xl sm:text-5xl font-black text-[#1d1d1f] numr tracking-tight">${calculatedPrice}</span>
+                  <span className="text-xs text-[#707070] dark:text-[#a1a1a6] block uppercase tracking-wider font-semibold">Total Custom Price</span>
+                  <span className="text-4xl sm:text-5xl font-black text-[#1d1d1f] dark:text-[#f5f5f7] numr tracking-tight">${calculatedPrice}</span>
                 </div>
-                <span className="text-xs text-[#707070] text-right">Includes custom plaque & temperature courier</span>
+                <span className="text-xs text-[#707070] dark:text-[#a1a1a6] text-right">Includes custom plaque & temperature courier</span>
               </div>
 
               <button
@@ -243,11 +243,11 @@ export default function AtelierConfigurator({
           </div>
 
           {/* Right Column: Customization Controls (7 cols) */}
-          <div className="lg:col-span-7 space-y-8 bg-white rounded-[28px] p-8 sm:p-10 shadow-sm">
+          <div className="lg:col-span-7 space-y-8 bg-white dark:bg-[#1c1c1e] border border-transparent dark:border-[#2c2c2e] rounded-[28px] p-8 sm:p-10 shadow-sm">
             
             {/* Step 1: Occasion */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#707070] font-semibold mb-3">
+              <label className="block text-[13px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold mb-3">
                 1. Select Occasion
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
@@ -257,8 +257,8 @@ export default function AtelierConfigurator({
                     onClick={() => setOccasion(occ)}
                     className={`py-2.5 px-4 rounded-xl text-[14px] font-medium transition-all text-center cursor-pointer border ${
                       occasion === occ
-                        ? "border-[#0071e3] bg-[#0071e3]/5 text-[#0071e3]"
-                        : "border-[#d6d6d6]/80 text-[#1d1d1f] hover:bg-[#f5f5f7]"
+                        ? "border-[#0071e3] dark:border-[#2997ff] bg-[#0071e3]/5 dark:bg-[#2997ff]/15 text-[#0071e3] dark:text-[#2997ff]"
+                        : "border-[#d6d6d6]/80 dark:border-[#2c2c2e] text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#242426]"
                     }`}
                   >
                     {occ}
@@ -269,7 +269,7 @@ export default function AtelierConfigurator({
 
             {/* Step 2: Tiers & Servings */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#707070] font-semibold mb-3">
+              <label className="block text-[13px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold mb-3">
                 2. Structure & Capacity
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -279,22 +279,22 @@ export default function AtelierConfigurator({
                     onClick={() => setTiers(opt.tiers)}
                     className={`p-4 rounded-2xl border cursor-pointer transition-all ${
                       tiers === opt.tiers
-                        ? "border-[#0071e3] bg-[#0071e3]/5 ring-1 ring-[#0071e3]"
-                        : "border-[#d6d6d6]/80 hover:bg-[#fafafc]"
+                        ? "border-[#0071e3] dark:border-[#2997ff] bg-[#0071e3]/5 dark:bg-[#2997ff]/15 ring-1 ring-[#0071e3] dark:ring-[#2997ff]"
+                        : "border-[#d6d6d6]/80 dark:border-[#2c2c2e] hover:bg-[#fafafc] dark:hover:bg-[#242426]"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-semibold text-[15px] text-[#1d1d1f]">
+                      <span className="font-semibold text-[15px] text-[#1d1d1f] dark:text-[#f5f5f7]">
                         {opt.name}
                       </span>
-                      <span className="text-[20px] font-bold text-[#1d1d1f] numr">
+                      <span className="text-[20px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] numr">
                         ${opt.basePrice}
                       </span>
                     </div>
-                    <div className="text-[12px] text-[#0071e3] font-medium mb-1">
+                    <div className="text-[12px] text-[#0071e3] dark:text-[#2997ff] font-medium mb-1">
                       {opt.tiers} {opt.tiers === 1 ? "Tier" : "Tiers"} • {opt.servings}
                     </div>
-                    <p className="text-[12px] text-[#707070] leading-snug">
+                    <p className="text-[12px] text-[#707070] dark:text-[#a1a1a6] leading-snug">
                       {opt.description}
                     </p>
                   </div>
@@ -304,7 +304,7 @@ export default function AtelierConfigurator({
 
             {/* Step 3: Flavor Symphony */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#707070] font-semibold mb-3">
+              <label className="block text-[13px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold mb-3">
                 3. Flavor Symphony
               </label>
               <div className="space-y-2.5">
@@ -314,8 +314,8 @@ export default function AtelierConfigurator({
                     onClick={() => setFlavorIndex(idx)}
                     className={`p-3.5 rounded-xl border cursor-pointer transition-all flex items-start gap-3.5 ${
                       flavorIndex === idx
-                        ? "border-[#0071e3] bg-[#0071e3]/5 ring-1 ring-[#0071e3]"
-                        : "border-[#d6d6d6]/80 hover:bg-[#fafafc]"
+                        ? "border-[#0071e3] dark:border-[#2997ff] bg-[#0071e3]/5 dark:bg-[#2997ff]/15 ring-1 ring-[#0071e3] dark:ring-[#2997ff]"
+                        : "border-[#d6d6d6]/80 dark:border-[#2c2c2e] hover:bg-[#fafafc] dark:hover:bg-[#242426]"
                     }`}
                   >
                     <span
@@ -323,15 +323,15 @@ export default function AtelierConfigurator({
                       style={{ backgroundColor: flav.color }}
                     />
                     <div className="flex-1">
-                      <div className="text-[14px] font-semibold text-[#1d1d1f]">
+                      <div className="text-[14px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">
                         {flav.name}
                       </div>
-                      <div className="text-[12px] text-[#707070] mt-0.5">
+                      <div className="text-[12px] text-[#707070] dark:text-[#a1a1a6] mt-0.5">
                         {flav.notes}
                       </div>
                     </div>
                     {flavorIndex === idx && (
-                      <Check className="w-4 h-4 text-[#0071e3] shrink-0 mt-1" />
+                      <Check className="w-4 h-4 text-[#0071e3] dark:text-[#2997ff] shrink-0 mt-1" />
                     )}
                   </div>
                 ))}
@@ -340,7 +340,7 @@ export default function AtelierConfigurator({
 
             {/* Step 4: Finishing Texture & Art */}
             <div>
-              <label className="block text-[13px] uppercase tracking-wider text-[#707070] font-semibold mb-3">
+              <label className="block text-[13px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold mb-3">
                 4. Exterior Art & Finish
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -350,15 +350,15 @@ export default function AtelierConfigurator({
                     onClick={() => setFinishStyle(fin.name)}
                     className={`p-3 rounded-xl border text-left cursor-pointer transition-all flex items-center justify-between ${
                       finishStyle === fin.name
-                        ? "border-[#0071e3] bg-[#0071e3]/5 text-[#1d1d1f]"
-                        : "border-[#d6d6d6]/80 text-[#707070] hover:bg-[#fafafc]"
+                        ? "border-[#0071e3] dark:border-[#2997ff] bg-[#0071e3]/5 dark:bg-[#2997ff]/15 text-[#1d1d1f] dark:text-[#f5f5f7]"
+                        : "border-[#d6d6d6]/80 dark:border-[#2c2c2e] text-[#707070] dark:text-[#a1a1a6] hover:bg-[#fafafc] dark:hover:bg-[#242426]"
                     }`}
                   >
-                    <span className="text-[13px] font-medium text-[#1d1d1f]">
+                    <span className="text-[13px] font-medium text-[#1d1d1f] dark:text-[#f5f5f7]">
                       {fin.name}
                     </span>
-                    <span className="text-[14px] font-bold text-[#1d1d1f] numr shrink-0 ml-2">
-                      {fin.extra > 0 ? `+$${fin.extra}` : <span className="text-emerald-600 font-semibold text-xs">Included</span>}
+                    <span className="text-[14px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] numr shrink-0 ml-2">
+                      {fin.extra > 0 ? `+$${fin.extra}` : <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-xs">Included</span>}
                     </span>
                   </button>
                 ))}
@@ -368,7 +368,7 @@ export default function AtelierConfigurator({
             {/* Step 5: Custom Inscription Plaque & Date */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[13px] uppercase tracking-wider text-[#707070] font-semibold mb-2">
+                <label className="block text-[13px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold mb-2">
                   5. Hand-Piped Plaque Text
                 </label>
                 <input
@@ -376,20 +376,20 @@ export default function AtelierConfigurator({
                   value={inscription}
                   onChange={(e) => setInscription(e.target.value)}
                   placeholder="e.g. Happy 30th Caroline"
-                  className="w-full px-4 py-2.5 rounded-xl border border-[#d6d6d6] text-[14px] focus:outline-none focus:border-[#0071e3]"
+                  className="w-full px-4 py-2.5 rounded-xl border border-[#d6d6d6] dark:border-[#2c2c2e] bg-white dark:bg-[#161618] text-[#1d1d1f] dark:text-[#f5f5f7] text-[14px] focus:outline-none focus:border-[#0071e3] dark:focus:border-[#2997ff]"
                 />
               </div>
 
               {/* Whole-Field Clickable Date Selector (Opens Popup Modal Picker) */}
               <div
                 onClick={() => setIsDatePickerOpen(true)}
-                className="px-4 py-2.5 rounded-xl border border-[#d6d6d6] hover:border-[#0071e3] transition-all bg-white cursor-pointer group flex items-center justify-between select-none shadow-2xs hover:shadow-xs"
+                className="px-4 py-2.5 rounded-xl border border-[#d6d6d6] dark:border-[#2c2c2e] hover:border-[#0071e3] dark:hover:border-[#2997ff] transition-all bg-white dark:bg-[#161618] cursor-pointer group flex items-center justify-between select-none shadow-2xs hover:shadow-xs"
               >
                 <div className="flex-1">
-                  <span className="block text-[11px] uppercase tracking-wider text-[#707070] font-semibold cursor-pointer">
+                  <span className="block text-[11px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold cursor-pointer">
                     Delivery / Event Date
                   </span>
-                  <div className="text-[14px] font-bold text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors mt-0.5">
+                  <div className="text-[14px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] group-hover:text-[#0071e3] dark:group-hover:text-[#2997ff] transition-colors mt-0.5">
                     {deliveryDate
                       ? new Date(deliveryDate + "T00:00:00").toLocaleDateString("en-US", {
                           weekday: "short",
@@ -400,8 +400,8 @@ export default function AtelierConfigurator({
                       : "Select date"}
                   </div>
                 </div>
-                <div className="w-8 h-8 rounded-lg bg-[#f5f5f7] group-hover:bg-[#0071e3]/10 flex items-center justify-center transition-colors">
-                  <Calendar className="w-4 h-4 text-[#707070] group-hover:text-[#0071e3] transition-colors" />
+                <div className="w-8 h-8 rounded-lg bg-[#f5f5f7] dark:bg-[#242426] group-hover:bg-[#0071e3]/10 dark:group-hover:bg-[#2997ff]/15 flex items-center justify-center transition-colors">
+                  <Calendar className="w-4 h-4 text-[#707070] dark:text-[#a1a1a6] group-hover:text-[#0071e3] dark:group-hover:text-[#2997ff] transition-colors" />
                 </div>
               </div>
             </div>
