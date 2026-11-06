@@ -1,13 +1,11 @@
-"use client";
-
 import React from "react";
-import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Lock } from "lucide-react";
 
 export default function Footer({
-  onSelectOccasion,
   onOpenConfigurator,
 }: {
-  onSelectOccasion: (occ: string) => void;
+  onSelectOccasion?: (occ: string) => void;
   onOpenConfigurator: () => void;
 }) {
   return (
@@ -34,17 +32,20 @@ export default function Footer({
               Occasions
             </h4>
             <ul className="space-y-2">
-              {["Weddings", "Birthdays", "Anniversaries", "Baby Showers", "Galas"].map((occ) => (
-                <li key={occ}>
-                  <button
-                    onClick={() => {
-                      onSelectOccasion(occ);
-                      document.getElementById("occasions-catalog")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="hover:text-[#1d1d1f] hover:underline cursor-pointer"
+              {[
+                { name: "Weddings", slug: "weddings" },
+                { name: "Birthdays", slug: "birthdays" },
+                { name: "Anniversaries", slug: "anniversaries" },
+                { name: "Baby Showers", slug: "baby-showers" },
+                { name: "Galas", slug: "galas" },
+              ].map((occ) => (
+                <li key={occ.slug}>
+                  <Link
+                    href={`/occasions/${occ.slug}`}
+                    className="hover:text-[#1d1d1f] hover:underline"
                   >
-                    {occ} Cakes
-                  </button>
+                    {occ.name} Cakes
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -52,9 +53,14 @@ export default function Footer({
 
           <div>
             <h4 className="text-[12px] font-semibold text-[#1d1d1f] mb-3">
-              Atelier & Services
+              Atelier & Catalog
             </h4>
             <ul className="space-y-2">
+              <li>
+                <Link href="/cakes" className="hover:text-[#1d1d1f] hover:underline">
+                  Full Cake Catalog
+                </Link>
+              </li>
               <li>
                 <button
                   onClick={onOpenConfigurator}
@@ -64,19 +70,14 @@ export default function Footer({
                 </button>
               </li>
               <li>
-                <a href="#occasions-catalog" className="hover:text-[#1d1d1f] hover:underline">
-                  Private Tasting Flight
+                <a href="/sitemap.xml" className="hover:text-[#1d1d1f] hover:underline">
+                  XML Sitemap
                 </a>
               </li>
               <li>
-                <span className="hover:text-[#1d1d1f] cursor-pointer">
-                  Venue Logistics & Staging
-                </span>
-              </li>
-              <li>
-                <span className="hover:text-[#1d1d1f] cursor-pointer">
-                  Dietary & Allergens Guide
-                </span>
+                <a href="/robots.txt" className="hover:text-[#1d1d1f] hover:underline">
+                  Robots & AI Directives
+                </a>
               </li>
             </ul>
           </div>
@@ -113,13 +114,16 @@ export default function Footer({
             Copyright © 2026 AURA Pâtisserie Haute Couture Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-4 text-[11px]">
+            <Link href="/cakes" className="hover:underline">Catalog</Link>
+            <span>•</span>
+            <Link href="/admin" className="hover:underline inline-flex items-center gap-1 text-[#0071e3] font-medium">
+              <Lock className="w-3 h-3" />
+              SEO & Admin Panel
+            </Link>
+            <span>•</span>
             <span className="hover:underline cursor-pointer">Privacy Policy</span>
             <span>•</span>
-            <span className="hover:underline cursor-pointer">Terms of Commission</span>
-            <span>•</span>
-            <span className="hover:underline cursor-pointer">Sales & Refunds</span>
-            <span>•</span>
-            <span className="hover:underline cursor-pointer">Legal</span>
+            <span className="hover:underline cursor-pointer">Terms</span>
           </div>
         </div>
 

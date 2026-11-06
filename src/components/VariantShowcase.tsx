@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CakeProduct, CAKE_CATALOG } from "../data/cakes";
 
 interface VariantShowcaseProps {
@@ -16,8 +16,6 @@ export default function VariantShowcase({
 }: VariantShowcaseProps) {
   const blushCake = CAKE_CATALOG.find((c) => c.id === "blush-seraphina-birthday") || CAKE_CATALOG[1];
   const midnightCake = CAKE_CATALOG.find((c) => c.id === "nocturne-anniversary-velvet") || CAKE_CATALOG[2];
-
-  const [activeVariant, setActiveVariant] = useState<"blush" | "midnight">("blush");
 
   return (
     <section className="w-full bg-[#ffffff] py-24 sm:py-32">

@@ -1,0 +1,67 @@
+--- a/src/lib/data-service.ts
++++ b/src/lib/data-service.ts
+@@ -672,21 +672,36 @@ export async function getVisitAnalytics(): Promise<VisitAnalyticsSummary> {
+   if (await isDbAvailable()) {
+     try {
+-      const totalVisits = await prisma.visit.count();
+-      const botVisits = await prisma.visit.count({ where: { isBot: true } });
+-      const normalUserVisits = totalVisits - botVisits;
+-
+-      const botGroup = await prisma.visit.groupBy({
+-        by: ["botName"],
+-        where: { isBot: true },
+-        _count: { _all: true },
+-      });
+-
+-      const botBreakdown: Record<string, number> = {};
+-      for (const b of botGroup) {
+-        const name = b.botName || "Unknown Bot";
+-        botBreakdown[name] = b._count._all;
+-      }
+-
+-      const recentDb = await prisma.visit.findMany({
+-        orderBy: { createdAt: "desc" },
+-        take: 50,
+-      });
++      const [countsByBot, recentDb, dailyTrends] = await prisma.$transaction([
++        prisma.visit.groupBy({
++          by: ["isBot", "botName"],
++          _count: { _all: true },
++        }),
++        prisma.visit.findMany({
++          orderBy: { createdAt: "desc" },
++          take: 50,
++        }),
++        prisma.$queryRaw<DailyVisitTrend[]>`
++          SELECT
++            TO_CHAR("createdAt" AT TIME ZONE 'UTC', 'YYYY-MM-DD') AS date,
++            COUNT(*) FILTER (WHERE "isBot" = false)::int AS "normalVisits",
++            COUNT(*) FILTER (WHERE "isBot" = true)::int AS "botVisits",
++            COUNT(*)::int AS "totalVisits"
++          FROM "Visit"
++          GROUP BY TO_CHAR("createdAt" AT TIME ZONE 'UTC', 'YYYY-MM-DD')
++          ORDER BY date ASC
++        `,
++      ]);
++
++      let botVisits = 0;
++      let normalUserVisits = 0;
++      const botBreakdown: Record<string, number> = {};
++
++      for (const b of countsByBot) {
++        if (b.isBot) {
++          const name = b.botName || "Unknown Bot";
++          botBreakdown[name] = (botBreakdown[name] || 0) + b._count._all;
++          botVisits += b._count._all;
++        } else {
++          normalUserVisits += b._count._all;
++        }
++      }
++
++      const totalVisits = normalUserVisits + botVisits;
+@@ -710,4 +725,5 @@ export async function getVisitAnalytics(): Promise<VisitAnalyticsSummary> {
+         botVisits,
+         botBreakdown,
+         recentVisits,
++        dailyTrends,
+       };

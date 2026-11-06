@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "Bespoke architectural cakes for weddings, milestone birthdays, anniversaries, baby showers, and grand galas. Handcrafted with pristine culinary artistry.",
 };
 
+export const instant = false;
+
 export default function RootLayout({
   children,
 }: Readonly<{

@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(SEO_SPECIALIST)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Cake {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  name            String
+  tagline         String
+  occasion        String
+  price           Float
+  image           String
+  imageAlt        String    @default("")
+  imageCaption    String?
+  finishColor     String    @default("#f0e4d3")
+  swatchName      String    @default("Starlight")
+  servings        String
+  tiers           Int       @default(1)
+  isNew           Boolean   @default(false)
+  flavors         String[]
+  description     String
+  tastingNotes    String[]
+  dimensions      String
+  leadTime        String
+  metaTitle       String?
+  metaDescription String?
+  canonicalUrl    String?
+  ogImage         String?
+  rawJsonLd       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  faqs            CakeFaq[]
+}
+
+model CakeFaq {
+  id        String   @id @default(cuid())
+  cakeId    String
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cake      Cake     @relation(fields: [cakeId], references: [id], onDelete: Cascade)
+}
+
+model PageSeo {
+  id              String    @id @default(cuid())
+  path            String    @unique
+  title           String
+  metaDescription String
+  canonicalUrl    String?
+  ogImage         String?
+  rawJsonLd       String?
+  noIndex         Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  faqs            PageFaq[]
+}
+
+model PageFaq {
+  id        String   @id @default(cuid())
+  pageSeoId String
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  pageSeo   PageSeo  @relation(fields: [pageSeoId], references: [id], onDelete: Cascade)
+}
+
+model RobotsConfig {
+  id                    String   @id @default("default")
+  gptBotAllowed         Boolean  @default(true)
+  perplexityBotAllowed  Boolean  @default(true)
+  claudeBotAllowed      Boolean  @default(true)
+  googleExtendedAllowed Boolean  @default(true)
+  ccBotAllowed          Boolean  @default(true)
+  customRules           String?  @default("")
+  sitemapUrl            String?  @default("/sitemap.xml")
+  updatedAt             DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              String   @id @default("default")
+  siteName        String   @default("AURA Patisserie")
+  siteUrl         String   @default("https://aurapatisserie.com")
+  siteDescription String   @default("Architectural Haute Patisserie & Bespoke Luxury Cakes")
+  logoUrl         String   @default("/images/wedding_cake.jpg")
+  contactEmail    String   @default("concierge@aurapatisserie.com")
+  contactPhone    String   @default("+1 (800) 555-AURA")
+  currency        String   @default("USD")
+  updatedAt       DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  SEO_SPECIALIST
+}
+
+model Visit {
+  id        String   @id @default(cuid())
+  path      String
+  userAgent String
+  isBot     Boolean  @default(false)
+  botName   String?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([isBot])
+  @@index([path])
+}
+
+enum OrderStatus {
+  ACTIVE
+  CANCELLED
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  cakeId        String
+  cakeName      String
+  customerName  String
+  customerEmail String
+  price         Float
+  quantity      Int         @default(1)
+  status        OrderStatus @default(ACTIVE)
+  deliveryDate  String?
+  notes         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([cakeId])
+  @@index([status])
+  @@index([createdAt])
+}

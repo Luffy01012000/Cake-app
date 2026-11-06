@@ -2,10 +2,12 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Plus, Eye, Check } from "lucide-react";
+import Link from "next/link";
+import { Plus, Eye, Check, ArrowRight } from "lucide-react";
 import { CakeProduct, CAKE_CATALOG } from "../data/cakes";
 
 interface OccasionTabsProps {
+  cakes?: CakeProduct[];
   onQuickView: (cake: CakeProduct) => void;
   onAddToCart: (cake: CakeProduct) => void;
   activeFilter: string;
@@ -13,6 +15,7 @@ interface OccasionTabsProps {
 }
 
 export default function OccasionTabs({
+  cakes,
   onQuickView,
   onAddToCart,
   activeFilter,
@@ -29,10 +32,12 @@ export default function OccasionTabs({
     "Galas",
   ];
 
+  const sourceCatalog = cakes && cakes.length > 0 ? cakes : CAKE_CATALOG;
+
   const filteredCakes =
     activeFilter === "All Occasions"
-      ? CAKE_CATALOG
-      : CAKE_CATALOG.filter((cake) => cake.occasion === activeFilter);
+      ? sourceCatalog
+      : sourceCatalog.filter((cake) => cake.occasion === activeFilter);
 
   const handleAdd = (cake: CakeProduct) => {
     onAddToCart(cake);
@@ -84,7 +89,10 @@ export default function OccasionTabs({
               className="bg-[#ffffff] rounded-[28px] overflow-hidden flex flex-col transition-all duration-300 hover:translate-y-[-4px] group"
             >
               {/* Product Visual */}
-              <div className="relative aspect-[4/3] w-full bg-[#f5f5f7] overflow-hidden">
+              <Link
+                href={`/cakes/${cake.id}`}
+                className="relative aspect-[4/3] w-full bg-[#f5f5f7] overflow-hidden block"
+              >
                 <Image
                   src={cake.image}
                   alt={cake.name}
@@ -115,14 +123,14 @@ export default function OccasionTabs({
                     {cake.swatchName}
                   </span>
                 </div>
-              </div>
+              </Link>
 
               {/* Card Content */}
               <div className="p-7 sm:p-8 flex flex-col flex-grow justify-between">
                 <div>
                   <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2">
-                    <h3 className="text-[21px] font-semibold text-[#1d1d1f] tracking-tight">
-                      {cake.name}
+                    <h3 className="text-[21px] font-semibold text-[#1d1d1f] tracking-tight group-hover:text-[#0071e3] transition-colors">
+                      <Link href={`/cakes/${cake.id}`}>{cake.name}</Link>
                     </h3>
                     <div className="flex items-baseline gap-1 shrink-0">
                       <span className="text-[12px] uppercase text-[#707070] font-semibold tracking-wider">from</span>
@@ -181,6 +189,17 @@ export default function OccasionTabs({
                   >
                     <Eye className="w-4 h-4 text-[#474747]" />
                   </button>
+                </div>
+
+                {/* Dedicated SEO Route Link for Crawlers & Visitors */}
+                <div className="pt-3 text-center">
+                  <Link
+                    href={`/cakes/${cake.id}`}
+                    className="text-[12px] text-[#707070] hover:text-[#0071e3] font-medium inline-flex items-center gap-1 group/link"
+                  >
+                    <span>View Architectural Details & Tasting Notes</span>
+                    <ArrowRight className="w-3 h-3 group-hover/link:translate-x-0.5 transition-transform" />
+                  </Link>
                 </div>
               </div>
             </div>
