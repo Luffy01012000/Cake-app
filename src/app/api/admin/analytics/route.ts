@@ -93,6 +93,16 @@ export async function GET(req?: NextRequest | Request) {
       { status: 200 }
     );
   } catch (err: unknown) {
+    if (
+      err &&
+      typeof err === "object" &&
+      "digest" in err &&
+      typeof (err as { digest: unknown }).digest === "string" &&
+      ((err as { digest: string }).digest.startsWith("NEXT_PRERENDER") ||
+        (err as { digest: string }).digest.startsWith("DYNAMIC_SERVER_USAGE"))
+    ) {
+      throw err;
+    }
     console.error("Error in /api/admin/analytics GET handler:", err);
     return NextResponse.json(
       { error: "Internal Server Error" },

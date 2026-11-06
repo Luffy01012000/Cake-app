@@ -29,8 +29,9 @@
 | E2E | E2E Testing Suite Track | Design and implement complete opaque-box Vitest suite (`tests/analytics-suite.test.ts`) across Tiers 1-4 | none | DONE |
 | M1 | Visit Analytics & Ingestion Core | UA classification utility, `Visit` model, seed visits, `recordVisit` / `getVisitAnalytics` in `data-service.ts`, `src/proxy.ts` | none | DONE |
 | M2 | Cake Order & Revenue Tracking Core | `Order` model, seed orders, order creation API, order cancellation API, `CartDrawer.tsx` integration, revenue calculations | M1 | DONE |
-| M3 | Role-Based UI, Dashboards & Navigation | Sidebar navigation link, dedicated `/admin/analytics` page, `/admin` summary KPI cards, RBAC API redaction | M1, M2 | IN_PROGRESS |
-| M-Final | E2E Test Pass & Adversarial Hardening | 100% test suite pass, Tier 5 adversarial tests, Forensic Integrity Audit | E2E, M1, M2, M3 | PLANNED |
+| M3 | Role-Based UI, Dashboards & Navigation | Sidebar navigation link, dedicated `/admin/analytics` page, `/admin` summary KPI cards, RBAC API redaction | M1, M2 | DONE |
+| M-Final | E2E Test Pass & Adversarial Hardening | 100% test suite pass, Tier 5 adversarial tests, Forensic Integrity Audit | E2E, M1, M2, M3 | DONE |
+
 
 ## Interface Contracts
 
