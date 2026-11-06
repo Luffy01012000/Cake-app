@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
   Cake,
   HelpCircle,
@@ -12,6 +13,10 @@ import {
   Zap,
   BarChart3,
   DollarSign,
+  Activity,
+  Users,
+  ShoppingBag,
+  XCircle,
 } from "lucide-react";
 import {
   getAllCakes,
@@ -26,7 +31,11 @@ import { analyzeSeo } from "@/lib/seo-utils";
 
 export default async function AdminDashboardPage() {
   const session = await getSession();
-  const isAdmin = session?.role === "ADMIN";
+  if (!session) {
+    redirect("/admin/login");
+  }
+
+  const isAdmin = session.role === "ADMIN";
 
   const [cakes, pages, robots, dbStatus, visits, financials] = await Promise.all([
     getAllCakes(),
@@ -220,6 +229,140 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Role-Based Summary Analytics KPI Cards */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
+            <BarChart3 className="w-3.5 h-3.5 text-purple-600" />
+            {isAdmin ? "Executive Performance & Sales KPIs" : "Traffic & Audience Metrics"}
+          </h2>
+          <span className="text-[11px] text-gray-400">
+            {isAdmin ? "All financial & traffic telemetry" : "Audience & crawler telemetry"}
+          </span>
+        </div>
+
+        <div
+          className={`grid grid-cols-1 sm:grid-cols-2 ${
+            isAdmin ? "lg:grid-cols-5" : "lg:grid-cols-3"
+          } gap-4`}
+        >
+          {/* Traffic KPI 1: Total Impressions */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Total Impressions
+              </span>
+              <div className="p-2 bg-purple-50 text-purple-600 rounded-xl">
+                <Activity className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl font-bold text-gray-900">
+              {visits.totalVisits.toLocaleString()}
+            </div>
+            <div className="mt-2 text-xs text-gray-500 flex items-center gap-1">
+              <span>Across all landing & cake routes</span>
+            </div>
+          </div>
+
+          {/* Traffic KPI 2: Human Visitors / Ratio */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                {isAdmin ? "Human vs Bot Ratio" : "Human Visitors"}
+              </span>
+              <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                <Users className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl font-bold text-emerald-600">
+              {isAdmin
+                ? `${visits.normalUserVisits} / ${visits.botVisits}`
+                : visits.normalUserVisits.toLocaleString()}
+            </div>
+            <div className="mt-2 text-xs text-emerald-600 flex items-center gap-1 font-medium">
+              <span>{userPercent}% human browser traffic</span>
+            </div>
+          </div>
+
+          {/* Traffic KPI 3: Bot & AI Crawlers */}
+          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Bot & AI Crawlers
+              </span>
+              <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                <Bot className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl font-bold text-indigo-600">
+              {visits.botVisits.toLocaleString()}
+            </div>
+            <div className="mt-2 text-xs text-indigo-600 flex items-center gap-1 font-medium">
+              <span>{botPercent}% search & AI crawlers</span>
+            </div>
+          </div>
+
+          {/* Financial KPI Cards: ADMIN ONLY */}
+          {isAdmin && financials && (
+            <>
+              {/* Financial KPI 1: Net Revenue */}
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Net Cake Revenue
+                  </span>
+                  <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                    <DollarSign className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">
+                  ${financials.netRevenue.toLocaleString()}
+                </div>
+                <div className="mt-2 text-xs text-gray-500 flex items-center gap-1">
+                  <span>Gross: ${financials.grossRevenue.toLocaleString()}</span>
+                </div>
+              </div>
+
+              {/* Financial KPI 2: Cakes Sold */}
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Cakes Sold
+                  </span>
+                  <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                    <ShoppingBag className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">
+                  {financials.totalBoughtCount}
+                </div>
+                <div className="mt-2 text-xs text-blue-600 flex items-center gap-1 font-medium">
+                  <span>Fulfilled catalog orders</span>
+                </div>
+              </div>
+
+              {/* Financial KPI 3: Cancelled Orders */}
+              <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                    Cancelled Orders
+                  </span>
+                  <div className="p-2 bg-rose-50 text-rose-600 rounded-xl">
+                    <XCircle className="w-4 h-4" />
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-rose-600">
+                  {financials.totalCancelledCount}
+                </div>
+                <div className="mt-2 text-xs text-rose-500 flex items-center gap-1">
+                  <span>-${financials.cancelledRevenue.toLocaleString()} refunded</span>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       {/* KPI Cards Grid */}

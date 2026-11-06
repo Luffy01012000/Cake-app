@@ -132,23 +132,23 @@ export default function DatePickerModal({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/45 backdrop-blur-xs animate-fade-in cursor-pointer"
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/45 dark:bg-black/75 backdrop-blur-xs animate-fade-in cursor-pointer"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-[360px] bg-white rounded-[26px] p-6 shadow-2xl border border-black/5 cursor-default relative transition-all"
+        className="w-full max-w-[360px] bg-white dark:bg-[#1c1c1e] border border-black/5 dark:border-[#2c2c2e] rounded-[26px] p-6 shadow-2xl cursor-default relative transition-all"
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#f5f5f7]">
+        <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#f5f5f7] dark:border-[#2c2c2e]">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#0071e3]/10 flex items-center justify-center text-[#0071e3]">
+            <div className="w-8 h-8 rounded-full bg-[#0071e3]/10 dark:bg-[#2997ff]/15 flex items-center justify-center text-[#0071e3] dark:text-[#2997ff]">
               <CalendarIcon className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-[16px] font-bold text-[#1d1d1f] tracking-tight leading-none">
+              <h3 className="text-[16px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight leading-none">
                 {title}
               </h3>
-              <span className="text-[11px] text-[#707070] mt-0.5 block">
+              <span className="text-[11px] text-[#707070] dark:text-[#a1a1a6] mt-0.5 block">
                 {tempDate
                   ? new Date(tempDate + "T00:00:00").toLocaleDateString("en-US", {
                       weekday: "short",
@@ -164,7 +164,7 @@ export default function DatePickerModal({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-[#f5f5f7] hover:bg-[#e8e8ed] flex items-center justify-center text-[#1d1d1f] transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e8e8ed] dark:hover:bg-[#38383a] flex items-center justify-center text-[#1d1d1f] dark:text-[#f5f5f7] transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -178,20 +178,20 @@ export default function DatePickerModal({
             disabled={isCurrentMonthOrPast}
             className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
               isCurrentMonthOrPast
-                ? "text-[#d6d6d6] cursor-not-allowed opacity-30"
-                : "text-[#707070] hover:text-[#1d1d1f] hover:bg-[#f5f5f7] cursor-pointer"
+                ? "text-[#d6d6d6] dark:text-[#38383a] cursor-not-allowed opacity-30"
+                : "text-[#707070] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#2c2c2e] cursor-pointer"
             }`}
             aria-label="Previous month"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <span className="text-[14px] font-bold text-[#1d1d1f]">
+          <span className="text-[14px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">
             {monthName}
           </span>
           <button
             type="button"
             onClick={nextMonth}
-            className="w-8 h-8 rounded-full hover:bg-[#f5f5f7] flex items-center justify-center text-[#707070] hover:text-[#1d1d1f] transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full hover:bg-[#f5f5f7] dark:hover:bg-[#2c2c2e] flex items-center justify-center text-[#707070] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors cursor-pointer"
             aria-label="Next month"
           >
             <ChevronRight className="w-4 h-4" />
@@ -199,7 +199,7 @@ export default function DatePickerModal({
         </div>
 
         {/* Days of week header */}
-        <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-semibold text-[#707070] mb-1">
+        <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-semibold text-[#707070] dark:text-[#a1a1a6] mb-1">
           <span>Su</span>
           <span>Mo</span>
           <span>Tu</span>
@@ -233,12 +233,12 @@ export default function DatePickerModal({
                 onClick={() => !isPast && handleDayClick(day)}
                 className={`w-9 h-9 mx-auto rounded-full text-[13px] font-semibold flex items-center justify-center transition-all ${
                   isPast
-                    ? "text-[#c7c7cc] cursor-not-allowed opacity-35"
+                    ? "text-[#c7c7cc] dark:text-[#48484a] cursor-not-allowed opacity-35"
                     : isSelected
-                    ? "bg-[#0071e3] text-white shadow-sm cursor-pointer"
+                    ? "bg-[#0071e3] dark:bg-[#2997ff] text-white shadow-sm cursor-pointer"
                     : isToday
-                    ? "text-[#0071e3] font-bold border border-[#0071e3]/30 hover:bg-[#f5f5f7] cursor-pointer"
-                    : "text-[#1d1d1f] hover:bg-[#f5f5f7] cursor-pointer"
+                    ? "text-[#0071e3] dark:text-[#2997ff] font-bold border border-[#0071e3]/30 dark:border-[#2997ff]/40 hover:bg-[#f5f5f7] dark:hover:bg-[#2c2c2e] cursor-pointer"
+                    : "text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#f5f5f7] dark:hover:bg-[#2c2c2e] cursor-pointer"
                 }`}
               >
                 {day}
@@ -248,25 +248,25 @@ export default function DatePickerModal({
         </div>
 
         {/* Quick Presets */}
-        <div className="flex items-center gap-2 pt-3 pb-4 border-t border-[#f5f5f7]">
+        <div className="flex items-center gap-2 pt-3 pb-4 border-t border-[#f5f5f7] dark:border-[#2c2c2e]">
           <button
             type="button"
             onClick={() => handlePreset(2)}
-            className="flex-1 py-1.5 px-2 rounded-xl bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[11px] font-semibold text-[#1d1d1f] transition-colors cursor-pointer text-center"
+            className="flex-1 py-1.5 px-2 rounded-xl bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e8e8ed] dark:hover:bg-[#38383a] text-[11px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] transition-colors cursor-pointer text-center"
           >
             In 2 Days
           </button>
           <button
             type="button"
             onClick={() => handlePreset(4)}
-            className="flex-1 py-1.5 px-2 rounded-xl bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[11px] font-semibold text-[#1d1d1f] transition-colors cursor-pointer text-center"
+            className="flex-1 py-1.5 px-2 rounded-xl bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e8e8ed] dark:hover:bg-[#38383a] text-[11px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] transition-colors cursor-pointer text-center"
           >
             In 4 Days
           </button>
           <button
             type="button"
             onClick={handleNextWeekend}
-            className="flex-1 py-1.5 px-2 rounded-xl bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[11px] font-semibold text-[#1d1d1f] transition-colors cursor-pointer text-center"
+            className="flex-1 py-1.5 px-2 rounded-xl bg-[#f5f5f7] dark:bg-[#2c2c2e] hover:bg-[#e8e8ed] dark:hover:bg-[#38383a] text-[11px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] transition-colors cursor-pointer text-center"
           >
             Saturday
           </button>
@@ -277,14 +277,14 @@ export default function DatePickerModal({
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-full text-[13px] font-semibold text-[#707070] hover:bg-[#f5f5f7] transition-colors cursor-pointer"
+            className="flex-1 py-2.5 rounded-full text-[13px] font-semibold text-[#707070] dark:text-[#a1a1a6] hover:bg-[#f5f5f7] dark:hover:bg-[#2c2c2e] transition-colors cursor-pointer"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleConfirm}
-            className="flex-1 py-2.5 rounded-full text-[13px] font-semibold bg-[#0071e3] hover:bg-[#0077ed] text-white transition-colors cursor-pointer flex items-center justify-center gap-1 shadow-sm"
+            className="flex-1 py-2.5 rounded-full text-[13px] font-semibold bg-[#0071e3] dark:bg-[#2997ff] hover:bg-[#0077ed] dark:hover:bg-[#47a6ff] text-white transition-colors cursor-pointer flex items-center justify-center gap-1 shadow-sm"
           >
             <Check className="w-4 h-4" />
             Apply Date

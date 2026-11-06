@@ -122,7 +122,7 @@ export default async function HomePage() {
         />
       ))}
 
-      <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <Suspense fallback={<div className="min-h-screen bg-white dark:bg-[#000000]" />}>
         <HomeClient
           initialCakes={cakes}
           homeFaqs={pageSeo?.faqs || []}
