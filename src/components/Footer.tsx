@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Lock } from "lucide-react";
 
 export default function Footer({
-  onSelectOccasion,
   onOpenConfigurator,
 }: {
   onSelectOccasion?: (occ: string) => void;

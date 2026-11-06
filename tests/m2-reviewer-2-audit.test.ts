@@ -14,6 +14,7 @@ import {
 import { SEED_ORDERS, SEED_CAKES } from "../src/lib/seed-data";
 
 describe("Milestone 2 Reviewer 2: Security & Parity Audit Suite", () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const globalStore = (globalThis as any).__auraStore;
 
   beforeEach(() => {
@@ -333,6 +334,7 @@ describe("Milestone 2 Reviewer 2: Security & Parity Audit Suite", () => {
       });
 
       expect(globalStore.orders.length).toBe(initialCount + 1);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const inMemory = globalStore.orders.find((o: any) => o.id === order.id);
       expect(inMemory).toBeDefined();
       expect(inMemory.status).toBe("ACTIVE");
@@ -341,6 +343,7 @@ describe("Milestone 2 Reviewer 2: Security & Parity Audit Suite", () => {
 
       // Verify cancellation synchrony
       await cancelOrder(order.id);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const cancelledInMemory = globalStore.orders.find((o: any) => o.id === order.id);
       expect(cancelledInMemory.status).toBe("CANCELLED");
     });
