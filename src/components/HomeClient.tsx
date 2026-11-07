@@ -147,7 +147,7 @@ export default function HomeClient({
   const cartTotalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <main className="min-h-screen bg-[#ffffff] selection:bg-[#0071e3] selection:text-white">
+    <main className="min-h-screen bg-[#ffffff] dark:bg-[#000000] selection:bg-[#0071e3] dark:selection:bg-[#2997ff] selection:text-white transition-colors duration-200">
       {/* 1. Promo Ribbon */}
       <PromoRibbon onOpenConsultation={handleOrderTastingFlight} />
 
@@ -196,16 +196,16 @@ export default function HomeClient({
       />
 
       {/* 8. Interconnecting Occasions Directory (SEO Boost for Crawlers) */}
-      <section className="w-full bg-[#fafafc] py-20 border-t border-[#e5e5ea]">
+      <section className="w-full bg-[#fafafc] dark:bg-[#121214] py-20 border-t border-[#e5e5ea] dark:border-[#2c2c2e] transition-colors">
         <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
           <div className="text-center max-w-[650px] mx-auto mb-12">
-            <span className="text-[12px] uppercase font-semibold text-[#0071e3] tracking-wider mb-2 block">
+            <span className="text-[12px] uppercase font-semibold text-[#0071e3] dark:text-[#2997ff] tracking-wider mb-2 block">
               Architectural Cake Repertoire
             </span>
-            <h2 className="text-[28px] sm:text-[36px] font-bold text-[#1d1d1f] tracking-tight mb-3">
+            <h2 className="text-[28px] sm:text-[36px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-3">
               Tailored Cakes for Every Event Milestone
             </h2>
-            <p className="text-[15px] text-[#707070] leading-relaxed">
+            <p className="text-[15px] text-[#707070] dark:text-[#a1a1a6] leading-relaxed">
               Explore dedicated portfolios engineered specifically for weddings, luxury birthday galas, private anniversaries, and modern celebrations.
             </p>
           </div>
@@ -253,22 +253,22 @@ export default function HomeClient({
               <Link
                 key={item.title}
                 href={item.href || `/occasions/${item.slug}`}
-                className="p-6 bg-white rounded-[20px] border border-[#e5e5ea] hover:border-[#0071e3] hover:shadow-md transition-all group flex flex-col justify-between"
+                className="p-6 bg-white dark:bg-[#1c1c1e] rounded-[20px] border border-[#e5e5ea] dark:border-[#2c2c2e] hover:border-[#0071e3] dark:hover:border-[#2997ff] hover:shadow-md transition-all group flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-[17px] text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors">
+                    <h3 className="font-semibold text-[17px] text-[#1d1d1f] dark:text-[#f5f5f7] group-hover:text-[#0071e3] dark:group-hover:text-[#2997ff] transition-colors">
                       {item.title}
                     </h3>
-                    <span className="text-[12px] bg-[#f5f5f7] px-2.5 py-0.5 rounded-full font-medium text-[#474747]">
+                    <span className="text-[12px] bg-[#f5f5f7] dark:bg-[#2c2c2e] px-2.5 py-0.5 rounded-full font-medium text-[#474747] dark:text-[#d1d1d6]">
                       {item.count} Cakes
                     </span>
                   </div>
-                  <p className="text-[13px] text-[#707070] leading-relaxed mb-4">
+                  <p className="text-[13px] text-[#707070] dark:text-[#a1a1a6] leading-relaxed mb-4">
                     {item.desc}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-[13px] text-[#0071e3] font-medium group-hover:translate-x-1 transition-transform">
+                <div className="flex items-center gap-1 text-[13px] text-[#0071e3] dark:text-[#2997ff] font-medium group-hover:translate-x-1 transition-transform">
                   <span>Explore Portfolio</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </div>
@@ -280,16 +280,16 @@ export default function HomeClient({
 
       {/* 9. Frequently Asked Questions (Live FAQ Section from Admin Panel) */}
       {homeFaqs && homeFaqs.length > 0 && (
-        <section className="w-full bg-white py-20 border-t border-[#e5e5ea]">
+        <section className="w-full bg-white dark:bg-[#000000] py-20 border-t border-[#e5e5ea] dark:border-[#2c2c2e] transition-colors">
           <div className="max-w-[800px] mx-auto px-4 sm:px-8">
             <div className="text-center mb-12">
-              <span className="text-[12px] uppercase font-semibold text-[#0071e3] tracking-wider mb-2 block">
+              <span className="text-[12px] uppercase font-semibold text-[#0071e3] dark:text-[#2997ff] tracking-wider mb-2 block">
                 Patisserie Inquiries
               </span>
-              <h2 className="text-[28px] sm:text-[36px] font-bold text-[#1d1d1f] tracking-tight mb-3">
+              <h2 className="text-[28px] sm:text-[36px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-3">
                 Frequently Asked Questions
               </h2>
-              <p className="text-[15px] text-[#707070]">
+              <p className="text-[15px] text-[#707070] dark:text-[#a1a1a6]">
                 Everything you need to know about our commissioning process, flavor options, and refrigerated delivery.
               </p>
             </div>
@@ -300,24 +300,24 @@ export default function HomeClient({
                 return (
                   <div
                     key={i}
-                    className="border border-[#e5e5ea] rounded-[16px] overflow-hidden transition-colors"
+                    className="border border-[#e5e5ea] dark:border-[#2c2c2e] rounded-[16px] overflow-hidden bg-white dark:bg-[#1c1c1e] transition-colors"
                   >
                     <button
                       type="button"
                       onClick={() => setOpenFaq(isOpen ? null : i)}
-                      className="w-full text-left p-5 flex items-center justify-between gap-4 font-semibold text-[15px] text-[#1d1d1f] hover:bg-[#fafafc] transition-colors"
+                      className="w-full text-left p-5 flex items-center justify-between gap-4 font-semibold text-[15px] text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#fafafc] dark:hover:bg-[#242428] transition-colors cursor-pointer"
                       aria-expanded={isOpen}
                     >
                       <span className="flex items-center gap-3">
-                        <HelpCircle className="w-4 h-4 text-[#0071e3] shrink-0" />
+                        <HelpCircle className="w-4 h-4 text-[#0071e3] dark:text-[#2997ff] shrink-0" />
                         {faq.question}
                       </span>
-                      <span className="text-[20px] text-[#707070] font-light leading-none">
+                      <span className="text-[20px] text-[#707070] dark:text-[#a1a1a6] font-light leading-none">
                         {isOpen ? "−" : "+"}
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="px-5 pb-5 text-[14px] text-[#707070] leading-relaxed border-t border-[#f5f5f7] pt-3 pl-12">
+                      <div className="px-5 pb-5 text-[14px] text-[#707070] dark:text-[#a1a1a6] leading-relaxed border-t border-[#f5f5f7] dark:border-[#2c2c2e] pt-3 pl-12">
                         {faq.answer}
                       </div>
                     )}
