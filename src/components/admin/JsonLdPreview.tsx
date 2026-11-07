@@ -35,27 +35,27 @@ export default function JsonLdPreview({
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-xs space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-3">
+    <div className="bg-white dark:bg-[#141416] border border-gray-200 dark:border-[#202025] rounded-xl p-5 shadow-xs space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 dark:border-[#202025] pb-3">
         <div className="flex items-center gap-2">
-          <Code className="w-4 h-4 text-emerald-600" />
-          <h3 className="text-[14px] font-semibold text-gray-900">
+          <Code className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+          <h3 className="text-[14px] font-semibold text-gray-900 dark:text-gray-100">
             Structured Data & JSON-LD Suite
           </h3>
         </div>
 
         {/* Tab switcher */}
-        <div className="flex items-center bg-gray-100 p-0.5 rounded-lg text-xs">
+        <div className="flex items-center bg-gray-100 dark:bg-[#1d1d22] p-0.5 rounded-lg text-xs">
           <button
             type="button"
             onClick={() => setActiveTab("auto")}
             className={`px-3 py-1 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "auto"
-                ? "bg-white text-emerald-700 shadow-xs font-semibold"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white dark:bg-[#282830] text-emerald-700 dark:text-emerald-300 shadow-xs font-semibold"
+                : "text-gray-600 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white"
             }`}
           >
-            <Sparkles className="w-3 h-3 text-emerald-600" />
+            <Sparkles className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
             Auto-Generated
           </button>
           <button
@@ -63,8 +63,8 @@ export default function JsonLdPreview({
             onClick={() => setActiveTab("override")}
             className={`px-3 py-1 rounded-md transition-all cursor-pointer flex items-center gap-1.5 ${
               activeTab === "override"
-                ? "bg-white text-blue-700 shadow-xs font-semibold"
-                : "text-gray-600 hover:text-gray-900"
+                ? "bg-white dark:bg-[#282830] text-blue-700 dark:text-blue-300 shadow-xs font-semibold"
+                : "text-gray-600 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white"
             }`}
           >
             <span>Raw Override</span>
@@ -77,22 +77,22 @@ export default function JsonLdPreview({
 
       {activeTab === "auto" ? (
         <div className="space-y-3">
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-neutral-400">
             <span>
               Dynamically synthesized from cake specifications, breadcrumb trail, and active FAQs.
             </span>
             <button
               type="button"
               onClick={() => handleCopy(formattedAutoJson)}
-              className="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700 flex items-center gap-1 cursor-pointer"
+              className="px-2.5 py-1 bg-gray-100 dark:bg-[#1f1f25] hover:bg-gray-200 dark:hover:bg-[#282832] rounded text-gray-700 dark:text-neutral-200 flex items-center gap-1 cursor-pointer transition-colors"
             >
-              {copied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+              {copied ? <Check className="w-3 h-3 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3 h-3" />}
               {copied ? "Copied" : "Copy Schema"}
             </button>
           </div>
 
           <div className="relative">
-            <pre className="p-4 bg-gray-950 text-gray-100 text-xs font-mono rounded-xl overflow-x-auto max-h-[340px] leading-relaxed">
+            <pre className="p-4 bg-gray-950 dark:bg-[#0c0c0e] text-gray-100 text-xs font-mono rounded-xl overflow-x-auto max-h-[340px] leading-relaxed border border-transparent dark:border-[#202025]">
               <code>{formattedAutoJson}</code>
             </pre>
           </div>
@@ -100,14 +100,14 @@ export default function JsonLdPreview({
       ) : (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-neutral-400">
               Provide custom schema JSON (or JSON array). When defined, this takes priority over the auto-generated JSON-LD.
             </p>
             {rawOverride && (
               <button
                 type="button"
                 onClick={handleClearOverride}
-                className="text-xs text-red-600 hover:underline cursor-pointer"
+                className="text-xs text-red-600 dark:text-red-400 hover:underline cursor-pointer"
               >
                 Reset to Auto-Generated
               </button>
@@ -120,7 +120,7 @@ export default function JsonLdPreview({
               value={rawOverride}
               onChange={(e) => onOverrideChange(e.target.value)}
               placeholder={`{\n  "@context": "https://schema.org",\n  "@type": "Product",\n  "name": "Custom Cake Override"\n}`}
-              className="w-full p-4 font-mono text-xs bg-gray-950 text-emerald-400 border border-gray-800 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none leading-relaxed"
+              className="w-full p-4 font-mono text-xs bg-gray-950 dark:bg-[#0c0c0e] text-emerald-400 border border-gray-800 dark:border-[#282830] rounded-xl focus:ring-2 focus:ring-blue-500 outline-none leading-relaxed"
             />
 
             {/* Validation Indicator */}
@@ -128,15 +128,15 @@ export default function JsonLdPreview({
               <div
                 className={`p-2.5 rounded-lg text-xs flex items-center justify-between ${
                   validation.valid
-                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                    : "bg-red-50 text-red-800 border border-red-200"
+                    ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60"
+                    : "bg-red-50 dark:bg-red-950/40 text-red-800 dark:text-red-300 border border-red-200 dark:border-red-800/60"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   {validation.valid ? (
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   ) : (
-                    <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+                    <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 shrink-0" />
                   )}
                   <span>
                     {validation.valid

@@ -43,11 +43,11 @@ export default async function AdminSitemapPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
             Dynamic XML Sitemap & Indexing Registry
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
-            Real-time sitemap feed generated at <code className="font-mono text-gray-700">/sitemap.xml</code> for search engine webmasters.
+          <p className="text-xs text-gray-500 dark:text-neutral-400 mt-1">
+            Real-time sitemap feed generated at <code className="font-mono text-gray-700 dark:text-neutral-300 bg-gray-100 dark:bg-[#202025] px-1 py-0.5 rounded">/sitemap.xml</code> for search engine webmasters.
           </p>
         </div>
 
@@ -64,48 +64,48 @@ export default async function AdminSitemapPage() {
 
       {/* Summary Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+        <div className="bg-white dark:bg-[#141416] p-5 rounded-2xl border border-gray-200 dark:border-[#202025] shadow-xs">
+          <span className="text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
             Total Indexed URLs
           </span>
-          <div className="text-2xl font-bold text-gray-900">{allUrls.length}</div>
-          <p className="text-[11px] text-emerald-600 mt-1 flex items-center gap-1">
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">{allUrls.length}</div>
+          <p className="text-[11px] text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
             <CheckCircle2 className="w-3 h-3" />
             100% crawlable by Google & AI bots
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+        <div className="bg-white dark:bg-[#141416] p-5 rounded-2xl border border-gray-200 dark:border-[#202025] shadow-xs">
+          <span className="text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
             Dedicated Cake Routes
           </span>
-          <div className="text-2xl font-bold text-gray-900">{cakeUrls.length}</div>
-          <p className="text-[11px] text-gray-500 mt-1">
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">{cakeUrls.length}</div>
+          <p className="text-[11px] text-gray-500 dark:text-neutral-400 mt-1">
             Synchronized dynamically from PostgreSQL
           </p>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider block mb-1">
+        <div className="bg-white dark:bg-[#141416] p-5 rounded-2xl border border-gray-200 dark:border-[#202025] shadow-xs">
+          <span className="text-xs font-semibold text-gray-500 dark:text-neutral-400 uppercase tracking-wider block mb-1">
             Categorized Occasion Pages
           </span>
-          <div className="text-2xl font-bold text-gray-900">5</div>
-          <p className="text-[11px] text-gray-500 mt-1">
+          <div className="text-2xl font-bold text-gray-900 dark:text-white">5</div>
+          <p className="text-[11px] text-gray-500 dark:text-neutral-400 mt-1">
             Deep internal interlinking active
           </p>
         </div>
       </div>
 
       {/* Sitemap Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="text-sm font-bold text-gray-900">Registered Sitemap Entries</h2>
-          <span className="text-xs font-mono text-gray-500">Live generated via Next.js metadata route</span>
+      <div className="bg-white dark:bg-[#141416] rounded-2xl border border-gray-200 dark:border-[#202025] shadow-xs overflow-hidden">
+        <div className="p-4 border-b border-gray-100 dark:border-[#202025] flex items-center justify-between">
+          <h2 className="text-sm font-bold text-gray-900 dark:text-white">Registered Sitemap Entries</h2>
+          <span className="text-xs font-mono text-gray-500 dark:text-neutral-400">Live generated via Next.js metadata route</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-gray-50 text-gray-500 uppercase font-semibold border-b border-gray-200">
+            <thead className="bg-gray-50 dark:bg-[#101012] text-gray-500 dark:text-neutral-400 uppercase font-semibold border-b border-gray-200 dark:border-[#202025]">
               <tr>
                 <th className="py-3 px-4">Page Description</th>
                 <th className="py-3 px-4">Canonical URL</th>
@@ -115,29 +115,29 @@ export default async function AdminSitemapPage() {
                 <th className="py-3 px-4 text-right">Inspect</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 text-gray-700">
+            <tbody className="divide-y divide-gray-100 dark:divide-[#202025] text-gray-700 dark:text-neutral-300">
               {allUrls.map((item, i) => (
-                <tr key={i} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-gray-900">
+                <tr key={i} className="hover:bg-gray-50/50 dark:hover:bg-[#18181c] transition-colors">
+                  <td className="py-3 px-4 font-semibold text-gray-900 dark:text-white">
                     {item.label}
                   </td>
-                  <td className="py-3 px-4 font-mono text-gray-600">
+                  <td className="py-3 px-4 font-mono text-gray-600 dark:text-neutral-400">
                     {item.url}
                   </td>
                   <td className="py-3 px-4">
-                    <span className="px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 text-[10px] font-medium mr-1.5">
+                    <span className="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-[#1e1e24] text-gray-700 dark:text-neutral-300 text-[10px] font-medium mr-1.5">
                       {item.type}
                     </span>
                     {item.isNoIndex && (
-                      <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-medium">
+                      <span className="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-950/40 text-red-700 dark:text-red-300 text-[10px] font-medium">
                         noindex (Excluded)
                       </span>
                     )}
                   </td>
-                  <td className="py-3 px-4 font-mono font-medium text-gray-900">
+                  <td className="py-3 px-4 font-mono font-medium text-gray-900 dark:text-white">
                     {item.priority}
                   </td>
-                  <td className="py-3 px-4 text-gray-500">
+                  <td className="py-3 px-4 text-gray-500 dark:text-neutral-400">
                     {item.freq}
                   </td>
                   <td className="py-3 px-4 text-right">
@@ -145,7 +145,7 @@ export default async function AdminSitemapPage() {
                       href={item.url.replace(baseUrl, "")}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline flex items-center justify-end gap-1"
+                      className="text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-end gap-1"
                     >
                       <span>Visit</span>
                       <ExternalLink className="w-3 h-3" />

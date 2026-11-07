@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, ArrowRight, Sparkles } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { getAllCakes, getPageSeo, getSiteSettings } from "@/lib/data-service";
 import {
   generateBreadcrumbJsonLd,
@@ -115,32 +117,34 @@ export default async function CakesIndexPage() {
         />
       ))}
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] flex flex-col transition-colors duration-200">
+        <Navbar />
+
         {/* Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"
-          className="bg-[#fafafc] border-b border-[#e5e5ea] py-3 px-4 sm:px-8"
+          className="bg-[#fafafc] dark:bg-[#121214] border-b border-[#e5e5ea] dark:border-[#202024] py-3 px-4 sm:px-8"
         >
-          <div className="max-w-[1200px] mx-auto flex items-center flex-wrap gap-2 text-[13px] text-[#707070]">
-            <Link href="/" className="hover:text-[#1d1d1f] hover:underline">
+          <div className="max-w-[1200px] mx-auto flex items-center flex-wrap gap-2 text-[13px] text-[#707070] dark:text-[#a1a1a6]">
+            <Link href="/" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
               Home
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#1d1d1f] font-medium">Haute Cake Catalog</span>
+            <span className="text-[#1d1d1f] dark:text-[#f5f5f7] font-medium">Haute Cake Catalog</span>
           </div>
         </nav>
 
         {/* Hero Section */}
-        <header className="bg-gradient-to-b from-[#fafafc] to-white py-16 sm:py-24 border-b border-[#f0f0f4]">
+        <header className="bg-gradient-to-b from-[#fafafc] to-white dark:from-[#121214] dark:to-[#000000] py-16 sm:py-24 border-b border-[#f0f0f4] dark:border-[#202024]">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-8">
-            <div className="inline-flex items-center gap-2 bg-[#0071e3]/10 text-[#0071e3] text-[12px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 bg-[#0071e3]/10 dark:bg-[#2997ff]/15 text-[#0071e3] dark:text-[#2997ff] text-[12px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
               <Sparkles className="w-3.5 h-3.5" />
               Full Patisserie Portfolio
             </div>
-            <h1 className="text-[36px] sm:text-[52px] font-bold text-[#1d1d1f] tracking-tight mb-4">
+            <h1 className="text-[36px] sm:text-[52px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-4">
               The Haute Cake Catalog
             </h1>
-            <p className="text-[19px] text-[#474747] max-w-[760px] leading-relaxed">
+            <p className="text-[19px] text-[#474747] dark:text-[#a1a1a6] max-w-[760px] leading-relaxed">
               Explore our complete repertoire of bespoke architectural cakes. Hand-sculpted for bridal vows, milestone birthdays, romantic galas, and intimate celebrations.
             </p>
 
@@ -152,8 +156,8 @@ export default async function CakesIndexPage() {
                   href={occ.href}
                   className={`px-4 py-2 rounded-full text-[13px] font-medium transition-colors ${
                     occ.name === "All Cakes"
-                      ? "bg-[#1d1d1f] text-white"
-                      : "bg-[#f5f5f7] hover:bg-[#e8e8ed] text-[#1d1d1f]"
+                      ? "bg-[#1d1d1f] dark:bg-white text-white dark:text-[#1d1d1f]"
+                      : "bg-[#f5f5f7] dark:bg-[#1c1c1f] hover:bg-[#e8e8ed] dark:hover:bg-[#28282c] text-[#1d1d1f] dark:text-[#f5f5f7]"
                   }`}
                 >
                   {occ.name}
@@ -164,16 +168,16 @@ export default async function CakesIndexPage() {
         </header>
 
         {/* Catalog Grid */}
-        <main className="max-w-[1200px] mx-auto px-4 sm:px-8 py-16">
+        <main className="max-w-[1200px] mx-auto px-4 sm:px-8 py-16 flex-grow w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {cakes.map((cake) => (
               <article
                 key={cake.id}
-                className="bg-white rounded-[24px] overflow-hidden border border-[#e5e5ea] hover:shadow-xl transition-all duration-300 flex flex-col group"
+                className="bg-white dark:bg-[#141416] rounded-[24px] overflow-hidden border border-[#e5e5ea] dark:border-[#222226] hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/60 transition-all duration-300 flex flex-col group"
               >
                 <Link
                   href={`/cakes/${cake.slug}`}
-                  className="relative aspect-[4/3] w-full bg-[#f5f5f7] overflow-hidden block"
+                  className="relative aspect-[4/3] w-full bg-[#f5f5f7] dark:bg-[#1c1c1f] overflow-hidden block"
                 >
                   <Image
                     src={cake.image}
@@ -182,12 +186,12 @@ export default async function CakesIndexPage() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-[12px] font-medium text-[#1d1d1f]">
+                  <div className="absolute top-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-md px-3 py-1 rounded-full text-[12px] font-medium text-[#1d1d1f] dark:text-[#f5f5f7] border border-black/5 dark:border-white/10">
                     {cake.occasion}
                   </div>
-                  <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1.5 text-[11px] font-medium text-[#474747]">
+                  <div className="absolute top-4 right-4 bg-white/80 dark:bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1.5 text-[11px] font-medium text-[#474747] dark:text-[#d1d1d6] border border-black/5 dark:border-white/10">
                     <span
-                      className="w-2.5 h-2.5 rounded-full border border-black/10"
+                      className="w-2.5 h-2.5 rounded-full border border-black/10 dark:border-white/20"
                       style={{ backgroundColor: cake.finishColor }}
                     />
                     {cake.swatchName}
@@ -197,42 +201,42 @@ export default async function CakesIndexPage() {
                 <div className="p-6 flex flex-col justify-between flex-grow">
                   <div>
                     <div className="flex items-baseline justify-between gap-2 mb-2">
-                      <h2 className="text-[20px] font-semibold text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors">
+                      <h2 className="text-[20px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] group-hover:text-[#0071e3] dark:group-hover:text-[#2997ff] transition-colors">
                         <Link href={`/cakes/${cake.slug}`}>{cake.name}</Link>
                       </h2>
-                      <span className="text-[22px] font-bold text-[#1d1d1f]">
+                      <span className="text-[22px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">
                         ${cake.price}
                       </span>
                     </div>
 
-                    <p className="text-[14px] text-[#707070] line-clamp-2 leading-relaxed mb-4">
+                    <p className="text-[14px] text-[#707070] dark:text-[#a1a1a6] line-clamp-2 leading-relaxed mb-4">
                       {cake.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 text-[12px] text-[#474747] mb-6">
-                      <span className="bg-[#f5f5f7] px-2.5 py-1 rounded-md">
+                    <div className="flex flex-wrap gap-2 text-[12px] text-[#474747] dark:text-[#d1d1d6] mb-6">
+                      <span className="bg-[#f5f5f7] dark:bg-[#202024] px-2.5 py-1 rounded-md">
                         {cake.servings}
                       </span>
-                      <span className="bg-[#f5f5f7] px-2.5 py-1 rounded-md">
+                      <span className="bg-[#f5f5f7] dark:bg-[#202024] px-2.5 py-1 rounded-md">
                         {cake.tiers} {cake.tiers === 1 ? "Tier" : "Tiers"}
                       </span>
-                      <span className="bg-[#f5f5f7] px-2.5 py-1 rounded-md">
+                      <span className="bg-[#f5f5f7] dark:bg-[#202024] px-2.5 py-1 rounded-md">
                         Lead: {cake.leadTime}
                       </span>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[#f5f5f7] flex items-center justify-between">
+                  <div className="pt-4 border-t border-[#f5f5f7] dark:border-[#202024] flex items-center justify-between">
                     <Link
                       href={`/cakes/${cake.slug}`}
-                      className="text-[14px] text-[#0071e3] font-medium hover:underline inline-flex items-center gap-1"
+                      className="text-[14px] text-[#0071e3] dark:text-[#2997ff] font-medium hover:underline inline-flex items-center gap-1"
                     >
                       Specifications & Details
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                     <Link
                       href={`/occasions/${cake.occasion.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="text-[12px] text-[#707070] hover:text-[#1d1d1f]"
+                      className="text-[12px] text-[#707070] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]"
                     >
                       More in {cake.occasion}
                     </Link>
@@ -244,20 +248,20 @@ export default async function CakesIndexPage() {
 
           {/* Catalog FAQs */}
           {pageSeo?.faqs && pageSeo.faqs.length > 0 && (
-            <section className="mt-20 pt-12 border-t border-[#e5e5ea] max-w-[800px]">
-              <h2 className="text-[24px] font-bold text-[#1d1d1f] tracking-tight mb-6">
+            <section className="mt-20 pt-12 border-t border-[#e5e5ea] dark:border-[#202024] max-w-[800px]">
+              <h2 className="text-[24px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-6">
                 Cake Catalog Inquiries & Ordering Guide
               </h2>
               <div className="space-y-4">
                 {pageSeo.faqs.map((faq, i) => (
                   <div
                     key={i}
-                    className="p-5 rounded-[16px] border border-[#e5e5ea] bg-[#fafafc]"
+                    className="p-5 rounded-[16px] border border-[#e5e5ea] dark:border-[#202024] bg-[#fafafc] dark:bg-[#141416]"
                   >
-                    <h3 className="font-semibold text-[16px] text-[#1d1d1f] mb-2">
+                    <h3 className="font-semibold text-[16px] text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">
                       {faq.question}
                     </h3>
-                    <p className="text-[14px] text-[#707070] leading-relaxed">
+                    <p className="text-[14px] text-[#707070] dark:text-[#a1a1a6] leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -266,6 +270,8 @@ export default async function CakesIndexPage() {
             </section>
           )}
         </main>
+
+        <Footer />
       </div>
     </>
   );

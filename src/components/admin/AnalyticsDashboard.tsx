@@ -295,7 +295,7 @@ export default function AnalyticsDashboard({
       {/* ==================================================================== */}
       {/* EXECUTIVE HEADER & TAB NAVIGATION                                     */}
       {/* ==================================================================== */}
-      <div className="bg-[#121216] border border-[#23232c] rounded-2xl p-6 sm:p-7 shadow-lg relative overflow-hidden">
+      <div className="bg-white dark:bg-[#121216] border border-gray-200 dark:border-[#23232c] rounded-2xl p-6 sm:p-7 shadow-xs dark:shadow-lg relative overflow-hidden transition-colors">
         {/* Subtle gold metallic shimmer line */}
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent" />
 
@@ -305,26 +305,26 @@ export default function AnalyticsDashboard({
               <span
                 className={`text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${
                   isAdmin
-                    ? "bg-[#1c1822] text-[#e5c158] border-[#d4af37]/40"
-                    : "bg-[#151c28] text-[#60a5fa] border-[#2563eb]/40"
+                    ? "bg-amber-50 dark:bg-[#1c1822] text-[#b8860b] dark:text-[#e5c158] border-[#d4af37]/30 dark:border-[#d4af37]/40"
+                    : "bg-blue-50 dark:bg-[#151c28] text-blue-700 dark:text-[#60a5fa] border-blue-200 dark:border-[#2563eb]/40"
                 }`}
               >
                 {isAdmin ? "Executive Terminal • Administrator" : "SEO Specialist Terminal"}
               </span>
-              <span className="text-xs text-[#a1a1aa] flex items-center gap-1.5 ml-2 font-mono">
-                <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+              <span className="text-xs text-gray-500 dark:text-[#a1a1aa] flex items-center gap-1.5 ml-2 font-mono">
+                <Activity className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400 animate-pulse" />
                 Live Ingestion Active
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2.5">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white flex items-center gap-2.5">
               <span>Traffic & Bot Intelligence</span>
               {isAdmin && (
-                <span className="text-[#a1a1aa] font-normal text-xl sm:text-2xl">
+                <span className="text-gray-500 dark:text-[#a1a1aa] font-normal text-xl sm:text-2xl">
                   & Cake Sales Financials
                 </span>
               )}
             </h1>
-            <p className="text-xs sm:text-sm text-[#a1a1aa] mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-[#a1a1aa] mt-1 max-w-2xl">
               {isAdmin
                 ? "Unified command center analyzing crawler access patterns, audience distributions, and real-time luxury cake order revenue."
                 : "Continuous inspection of search engine crawlers, Generative AI bots, and normal visitor engagement across all patisserie routes."}
@@ -338,11 +338,11 @@ export default function AnalyticsDashboard({
                 type="button"
                 onClick={handleRefresh}
                 disabled={isRefreshing}
-                className="px-3.5 py-2 bg-[#1a1a22] hover:bg-[#252530] text-gray-300 hover:text-white border border-[#2b2b36] rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+                className="px-3.5 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-[#1a1a22] dark:hover:bg-[#252530] text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border border-gray-200 dark:border-[#2b2b36] rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer disabled:opacity-50"
                 title="Refresh Analytics Data"
               >
                 <RefreshCw
-                  className={`w-3.5 h-3.5 text-[#e5c158] ${
+                  className={`w-3.5 h-3.5 text-amber-600 dark:text-[#e5c158] ${
                     isRefreshing ? "animate-spin" : ""
                   }`}
                 />
@@ -352,27 +352,27 @@ export default function AnalyticsDashboard({
               <button
                 type="button"
                 onClick={handleExportCsv}
-                className="px-3.5 py-2 bg-[#1a1a22] hover:bg-[#252530] text-gray-300 hover:text-white border border-[#2b2b36] rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+                className="px-3.5 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-[#1a1a22] dark:hover:bg-[#252530] text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white border border-gray-200 dark:border-[#2b2b36] rounded-xl text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
                 title="Export Filtered Visits to CSV"
               >
-                <Download className="w-3.5 h-3.5 text-blue-400" />
+                <Download className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 <span>Export CSV</span>
               </button>
             </div>
 
             {/* Tab Switcher: Rendered ONLY for ADMIN; completely absent for SEO_SPECIALIST */}
             {isAdmin && (
-              <div className="flex bg-[#1a1a22] p-1.5 rounded-xl border border-[#2b2b36] self-start lg:self-auto shrink-0">
+              <div className="flex bg-gray-100 dark:bg-[#1a1a22] p-1.5 rounded-xl border border-gray-200 dark:border-[#2b2b36] self-start lg:self-auto shrink-0">
                 <button
                   type="button"
                   onClick={() => setActiveTab("traffic")}
                   className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 cursor-pointer ${
                     activeTab === "traffic"
-                      ? "bg-[#252530] text-white shadow-sm border border-[#3b3b48]"
-                      : "text-[#a1a1aa] hover:text-white"
+                      ? "bg-white dark:bg-[#252530] text-gray-900 dark:text-white shadow-xs border border-gray-200 dark:border-[#3b3b48]"
+                      : "text-gray-600 dark:text-[#a1a1aa] hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
-                  <Bot className="w-3.5 h-3.5 text-[#e5c158]" />
+                  <Bot className="w-3.5 h-3.5 text-amber-600 dark:text-[#e5c158]" />
                   Traffic & Bots
                 </button>
                 <button
@@ -380,11 +380,11 @@ export default function AnalyticsDashboard({
                   onClick={() => setActiveTab("revenue")}
                   className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 cursor-pointer ${
                     activeTab === "revenue"
-                      ? "bg-[#252530] text-white shadow-sm border border-[#3b3b48]"
-                      : "text-[#a1a1aa] hover:text-white"
+                      ? "bg-white dark:bg-[#252530] text-gray-900 dark:text-white shadow-xs border border-gray-200 dark:border-[#3b3b48]"
+                      : "text-gray-600 dark:text-[#a1a1aa] hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
-                  <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
+                  <DollarSign className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   Cake Revenue
                 </button>
                 <button
@@ -392,11 +392,11 @@ export default function AnalyticsDashboard({
                   onClick={() => setActiveTab("orders")}
                   className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 cursor-pointer ${
                     activeTab === "orders"
-                      ? "bg-[#252530] text-white shadow-sm border border-[#3b3b48]"
-                      : "text-[#a1a1aa] hover:text-white"
+                      ? "bg-white dark:bg-[#252530] text-gray-900 dark:text-white shadow-xs border border-gray-200 dark:border-[#3b3b48]"
+                      : "text-gray-600 dark:text-[#a1a1aa] hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
-                  <ShoppingBag className="w-3.5 h-3.5 text-blue-400" />
+                  <ShoppingBag className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                   Orders & Actions
                 </button>
               </div>
@@ -413,72 +413,72 @@ export default function AnalyticsDashboard({
           {/* 4 PRIMARY TRAFFIC KPI CARDS */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Card 1: Total Traffic */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm relative overflow-hidden">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs relative overflow-hidden transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
                   Total Impressions
                 </span>
-                <Globe className="w-4 h-4 text-blue-400" />
+                <Globe className="w-4 h-4 text-blue-500 dark:text-blue-400" />
               </div>
-              <div className="text-3xl font-extrabold text-white font-mono tabular-nums">
+              <div className="text-3xl font-extrabold text-gray-900 dark:text-white font-mono tabular-nums">
                 {visits.totalVisits.toLocaleString()}
               </div>
-              <p className="text-xs text-[#71717a] mt-1.5 flex items-center gap-1">
+              <p className="text-xs text-gray-500 dark:text-[#71717a] mt-1.5 flex items-center gap-1">
                 <span>All recorded catalog route visits</span>
               </p>
             </div>
 
             {/* Card 2: Normal Visitors */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm relative overflow-hidden">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs relative overflow-hidden transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
                   Normal Visitors
                 </span>
-                <Users className="w-4 h-4 text-emerald-400" />
+                <Users className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <div className="text-3xl font-extrabold text-emerald-400 font-mono tabular-nums">
+              <div className="text-3xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono tabular-nums">
                 {normalVisits.toLocaleString()}
               </div>
               <div className="flex items-center gap-2 mt-1.5">
-                <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/70 border border-emerald-800/40 px-2 py-0.5 rounded-full font-mono">
+                <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800/40 px-2 py-0.5 rounded-full font-mono">
                   {userPercent}% of traffic
                 </span>
-                <span className="text-xs text-[#71717a]">Human browsers</span>
+                <span className="text-xs text-gray-500 dark:text-[#71717a]">Human browsers</span>
               </div>
             </div>
 
             {/* Card 3: Bot & AI Crawlers */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm relative overflow-hidden">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs relative overflow-hidden transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
                   Bot & AI Crawlers
                 </span>
-                <Bot className="w-4 h-4 text-purple-400" />
+                <Bot className="w-4 h-4 text-purple-600 dark:text-purple-400" />
               </div>
-              <div className="text-3xl font-extrabold text-purple-400 font-mono tabular-nums">
+              <div className="text-3xl font-extrabold text-purple-600 dark:text-purple-400 font-mono tabular-nums">
                 {botVisits.toLocaleString()}
               </div>
               <div className="flex items-center gap-2 mt-1.5">
-                <span className="text-[10px] font-bold text-purple-300 bg-purple-950/70 border border-purple-800/40 px-2 py-0.5 rounded-full font-mono">
+                <span className="text-[10px] font-bold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/70 border border-purple-200 dark:border-purple-800/40 px-2 py-0.5 rounded-full font-mono">
                   {botPercent}% of traffic
                 </span>
-                <span className="text-xs text-[#71717a]">Automated agents</span>
+                <span className="text-xs text-gray-500 dark:text-[#71717a]">Automated agents</span>
               </div>
             </div>
 
             {/* Card 4: Bot Percentage KPI Card */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm relative overflow-hidden">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs relative overflow-hidden transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider">
                   Crawler Share Ratio
                 </span>
-                <Percent className="w-4 h-4 text-[#e5c158]" />
+                <Percent className="w-4 h-4 text-amber-600 dark:text-[#e5c158]" />
               </div>
-              <div className="text-3xl font-extrabold text-[#e5c158] font-mono tabular-nums">
+              <div className="text-3xl font-extrabold text-amber-600 dark:text-[#e5c158] font-mono tabular-nums">
                 {botPercent}%
               </div>
               {/* Visual mini ratio bar */}
-              <div className="h-2 w-full bg-[#23232c] rounded-full overflow-hidden flex mt-2.5">
+              <div className="h-2 w-full bg-gray-100 dark:bg-[#23232c] rounded-full overflow-hidden flex mt-2.5">
                 <div
                   style={{ width: `${userPercent}%` }}
                   className="bg-emerald-500 transition-all duration-500"
@@ -490,7 +490,7 @@ export default function AnalyticsDashboard({
                   title={`Bots: ${botPercent}%`}
                 />
               </div>
-              <div className="flex justify-between text-[10px] text-[#71717a] mt-1 font-mono">
+              <div className="flex justify-between text-[10px] text-gray-500 dark:text-[#71717a] mt-1 font-mono">
                 <span>{normalVisits} Humans</span>
                 <span>{botVisits} Crawlers</span>
               </div>
@@ -498,48 +498,48 @@ export default function AnalyticsDashboard({
           </div>
 
           {/* BOT CATEGORY BREAKDOWN (AI Crawlers, Search Bots, Scrapers) */}
-          <div className="bg-[#141419] border border-[#252530] rounded-2xl p-6 shadow-sm">
+          <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-6 shadow-xs transition-colors">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
               <div>
-                <h2 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <Bot className="w-4 h-4 text-[#e5c158]" />
+                <h2 className="text-base font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <Bot className="w-4 h-4 text-amber-600 dark:text-[#e5c158]" />
                   Bot Category Breakdown & Agent Signatures
                 </h2>
-                <p className="text-xs text-[#a1a1aa] mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-[#a1a1aa] mt-0.5">
                   Granular distribution across Generative AI models, traditional search engines, and automated scrapers
                 </p>
               </div>
-              <div className="text-xs font-mono text-[#a1a1aa]">
+              <div className="text-xs font-mono text-gray-500 dark:text-[#a1a1aa]">
                 {Object.keys(visits.botBreakdown || {}).length} Unique Crawlers Detected
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Category 1: AI Crawlers */}
-              <div className="bg-[#181820] border border-[#2c2c38] rounded-xl p-5 flex flex-col justify-between">
+              <div className="bg-gray-50/70 dark:bg-[#181820] border border-gray-200 dark:border-[#2c2c38] rounded-xl p-5 flex flex-col justify-between transition-colors">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-purple-700 dark:text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5" /> Generative AI Crawlers
                     </span>
-                    <span className="text-xs font-mono font-bold text-purple-300 bg-purple-950/80 border border-purple-800/40 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-mono font-bold text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-950/80 border border-purple-200 dark:border-purple-800/40 px-2 py-0.5 rounded-full">
                       {categoryStats.aiCrawlerCount} visits
                     </span>
                   </div>
-                  <p className="text-xs text-[#71717a] mb-4">
+                  <p className="text-xs text-gray-500 dark:text-[#71717a] mb-4">
                     OpenAI GPTBot, Perplexity, Anthropic Claude, Gemini Google-Extended & Common Crawl indexers.
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {categoryStats.categorizedBots.ai.length === 0 ? (
-                      <span className="text-xs text-[#52525b] italic">None detected</span>
+                      <span className="text-xs text-gray-400 dark:text-[#52525b] italic">None detected</span>
                     ) : (
                       categoryStats.categorizedBots.ai.map((b) => (
                         <span
                           key={b.name}
-                          className="text-[11px] font-mono bg-[#231b34] text-purple-200 border border-purple-800/30 px-2 py-0.5 rounded-md flex items-center gap-1"
+                          className="text-[11px] font-mono bg-purple-50 dark:bg-[#231b34] text-purple-900 dark:text-purple-200 border border-purple-200 dark:border-purple-800/30 px-2 py-0.5 rounded-md flex items-center gap-1"
                         >
                           <span>{b.name}</span>
-                          <span className="text-purple-400 font-bold">({b.count})</span>
+                          <span className="text-purple-600 dark:text-purple-400 font-bold">({b.count})</span>
                         </span>
                       ))
                     )}
@@ -548,30 +548,30 @@ export default function AnalyticsDashboard({
               </div>
 
               {/* Category 2: Search Engine Bots */}
-              <div className="bg-[#181820] border border-[#2c2c38] rounded-xl p-5 flex flex-col justify-between">
+              <div className="bg-gray-50/70 dark:bg-[#181820] border border-gray-200 dark:border-[#2c2c38] rounded-xl p-5 flex flex-col justify-between transition-colors">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
                       <Globe className="w-3.5 h-3.5" /> Search Engine Bots
                     </span>
-                    <span className="text-xs font-mono font-bold text-blue-300 bg-blue-950/80 border border-blue-800/40 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-mono font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-950/80 border border-blue-200 dark:border-blue-800/40 px-2 py-0.5 rounded-full">
                       {categoryStats.searchBotCount} visits
                     </span>
                   </div>
-                  <p className="text-xs text-[#71717a] mb-4">
+                  <p className="text-xs text-gray-500 dark:text-[#71717a] mb-4">
                     Googlebot, Microsoft Bingbot, DuckDuckBot, Baiduspider, and major organic search indexers.
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {categoryStats.categorizedBots.search.length === 0 ? (
-                      <span className="text-xs text-[#52525b] italic">None detected</span>
+                      <span className="text-xs text-gray-400 dark:text-[#52525b] italic">None detected</span>
                     ) : (
                       categoryStats.categorizedBots.search.map((b) => (
                         <span
                           key={b.name}
-                          className="text-[11px] font-mono bg-[#162438] text-blue-200 border border-blue-800/30 px-2 py-0.5 rounded-md flex items-center gap-1"
+                          className="text-[11px] font-mono bg-blue-50 dark:bg-[#162438] text-blue-900 dark:text-blue-200 border border-blue-200 dark:border-blue-800/30 px-2 py-0.5 rounded-md flex items-center gap-1"
                         >
                           <span>{b.name}</span>
-                          <span className="text-blue-400 font-bold">({b.count})</span>
+                          <span className="text-blue-600 dark:text-blue-400 font-bold">({b.count})</span>
                         </span>
                       ))
                     )}
@@ -580,30 +580,30 @@ export default function AnalyticsDashboard({
               </div>
 
               {/* Category 3: Scrapers & Tools */}
-              <div className="bg-[#181820] border border-[#2c2c38] rounded-xl p-5 flex flex-col justify-between">
+              <div className="bg-gray-50/70 dark:bg-[#181820] border border-gray-200 dark:border-[#2c2c38] rounded-xl p-5 flex flex-col justify-between transition-colors">
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5" /> Scrapers & HTTP Tools
                     </span>
-                    <span className="text-xs font-mono font-bold text-amber-300 bg-amber-950/80 border border-amber-800/40 px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-mono font-bold text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-950/80 border border-amber-200 dark:border-amber-800/40 px-2 py-0.5 rounded-full">
                       {categoryStats.scraperToolCount} visits
                     </span>
                   </div>
-                  <p className="text-xs text-[#71717a] mb-4">
+                  <p className="text-xs text-gray-500 dark:text-[#71717a] mb-4">
                     Headless browsers, CLI tools (curl, wget), python-requests, and automated scraping software.
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {categoryStats.categorizedBots.scrapers.length === 0 ? (
-                      <span className="text-xs text-[#52525b] italic">None detected</span>
+                      <span className="text-xs text-gray-400 dark:text-[#52525b] italic">None detected</span>
                     ) : (
                       categoryStats.categorizedBots.scrapers.map((b) => (
                         <span
                           key={b.name}
-                          className="text-[11px] font-mono bg-[#282216] text-amber-200 border border-amber-800/30 px-2 py-0.5 rounded-md flex items-center gap-1"
+                          className="text-[11px] font-mono bg-amber-50 dark:bg-[#282216] text-amber-900 dark:text-amber-200 border border-amber-200 dark:border-amber-800/30 px-2 py-0.5 rounded-md flex items-center gap-1"
                         >
                           <span>{b.name}</span>
-                          <span className="text-amber-400 font-bold">({b.count})</span>
+                          <span className="text-amber-700 dark:text-amber-400 font-bold">({b.count})</span>
                         </span>
                       ))
                     )}
@@ -614,14 +614,14 @@ export default function AnalyticsDashboard({
           </div>
 
           {/* DAILY TRENDS CHART (SVG Visualization) */}
-          <div className="bg-[#141419] border border-[#252530] rounded-2xl p-6 shadow-sm">
+          <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-6 shadow-xs transition-colors">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
               <div>
-                <h2 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#e5c158]" />
+                <h2 className="text-base font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-amber-600 dark:text-[#e5c158]" />
                   Daily Ingestion Trends (Normal Visitors vs. Bots)
                 </h2>
-                <p className="text-xs text-[#a1a1aa] mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-[#a1a1aa] mt-0.5">
                   Timeline trajectory comparing human browser sessions against crawler waves
                 </p>
               </div>
@@ -630,18 +630,18 @@ export default function AnalyticsDashboard({
               <div className="flex items-center gap-4 text-xs font-medium">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-sm bg-emerald-500" />
-                  <span className="text-[#a1a1aa]">Normal Visitors</span>
+                  <span className="text-gray-600 dark:text-[#a1a1aa]">Normal Visitors</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-sm bg-purple-500" />
-                  <span className="text-[#a1a1aa]">Bots & Crawlers</span>
+                  <span className="text-gray-600 dark:text-[#a1a1aa]">Bots & Crawlers</span>
                 </div>
               </div>
             </div>
 
             {/* SVG Visual Bars */}
             <div className="pt-4 pb-2">
-              <div className="h-48 w-full flex items-end gap-3 sm:gap-6 px-2 border-b border-[#2c2c38]">
+              <div className="h-48 w-full flex items-end gap-3 sm:gap-6 px-2 border-b border-gray-200 dark:border-[#2c2c38]">
                 {trends.map((t, idx) => {
                   const normalHeight = (t.normalVisits / maxTrendTotal) * 100;
                   const botHeight = (t.botVisits / maxTrendTotal) * 100;
@@ -651,7 +651,7 @@ export default function AnalyticsDashboard({
                       className="flex-1 flex flex-col items-center h-full justify-end group relative"
                     >
                       {/* Tooltip on hover */}
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-14 bg-[#1e1e28] border border-[#3b3b4a] text-white text-[11px] p-2 rounded-lg pointer-events-none z-20 shadow-xl whitespace-nowrap font-mono">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-14 bg-gray-900 dark:bg-[#1e1e28] border border-gray-700 dark:border-[#3b3b4a] text-white text-[11px] p-2 rounded-lg pointer-events-none z-20 shadow-xl whitespace-nowrap font-mono">
                         <div className="font-bold text-[#e5c158]">{t.date}</div>
                         <div>Normal: {t.normalVisits} | Bots: {t.botVisits}</div>
                         <div>Total: {t.totalVisits} visits</div>
@@ -672,7 +672,7 @@ export default function AnalyticsDashboard({
                       </div>
 
                       {/* X-axis label */}
-                      <div className="text-[10px] text-[#71717a] font-mono mt-2 truncate max-w-[60px] text-center">
+                      <div className="text-[10px] text-gray-500 dark:text-[#71717a] font-mono mt-2 truncate max-w-[60px] text-center">
                         {t.date.length > 5 ? t.date.slice(5) : t.date}
                       </div>
                     </div>
@@ -683,13 +683,13 @@ export default function AnalyticsDashboard({
           </div>
 
           {/* RECENT VISITS TABLE WITH PATH, IP, BOT NAME, TIMESTAMP */}
-          <div className="bg-[#141419] border border-[#252530] rounded-2xl p-6 shadow-sm">
+          <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-6 shadow-xs transition-colors">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5">
               <div>
-                <h2 className="text-base font-bold text-white uppercase tracking-wider">
+                <h2 className="text-base font-bold text-gray-900 dark:text-white uppercase tracking-wider">
                   Live Traffic & Request Stream
                 </h2>
-                <p className="text-xs text-[#a1a1aa]">
+                <p className="text-xs text-gray-500 dark:text-[#a1a1aa]">
                   Inspecting incoming HTTP requests with parsed IP addresses and User-Agent categorization
                 </p>
               </div>
@@ -697,20 +697,20 @@ export default function AnalyticsDashboard({
               {/* Table Controls */}
               <div className="flex flex-wrap items-center gap-3">
                 <div className="relative">
-                  <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#71717a]" />
+                  <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-gray-400 dark:text-[#71717a]" />
                   <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search path, IP, bot..."
-                    className="pl-8 pr-3 py-1.5 text-xs bg-[#1a1a22] text-white border border-[#2c2c38] rounded-lg focus:outline-none focus:border-[#d4af37] w-48 sm:w-56"
+                    className="pl-8 pr-3 py-1.5 text-xs bg-gray-50 dark:bg-[#1a1a22] text-gray-900 dark:text-white border border-gray-200 dark:border-[#2c2c38] rounded-lg focus:outline-none focus:border-[#0071e3] dark:focus:border-[#d4af37] w-48 sm:w-56"
                   />
                 </div>
 
                 <select
                   value={visitFilter}
                   onChange={(e) => setVisitFilter(e.target.value as "all" | "users" | "bots")}
-                  className="px-3 py-1.5 text-xs bg-[#1a1a22] text-white border border-[#2c2c38] rounded-lg focus:outline-none"
+                  className="px-3 py-1.5 text-xs bg-gray-50 dark:bg-[#1a1a22] text-gray-900 dark:text-white border border-gray-200 dark:border-[#2c2c38] rounded-lg focus:outline-none cursor-pointer"
                 >
                   <option value="all">All Visitors</option>
                   <option value="users">Normal Users Only</option>
@@ -720,7 +720,7 @@ export default function AnalyticsDashboard({
                 <select
                   value={selectedBotCategory}
                   onChange={(e) => setSelectedBotCategory(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#1a1a22] text-white border border-[#2c2c38] rounded-lg focus:outline-none"
+                  className="px-3 py-1.5 text-xs bg-gray-50 dark:bg-[#1a1a22] text-gray-900 dark:text-white border border-gray-200 dark:border-[#2c2c38] rounded-lg focus:outline-none cursor-pointer"
                 >
                   <option value="all">All Bot Categories</option>
                   <option value="AI_CRAWLER">AI Crawlers</option>
@@ -733,7 +733,7 @@ export default function AnalyticsDashboard({
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#2c2c38] text-[#71717a]">
+                  <tr className="border-b border-gray-200 dark:border-[#2c2c38] text-gray-500 dark:text-[#71717a]">
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">Type</th>
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">Path</th>
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">IP Address</th>
@@ -742,10 +742,10 @@ export default function AnalyticsDashboard({
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px] text-right">Timestamp</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#20202a]">
+                <tbody className="divide-y divide-gray-100 dark:divide-[#20202a]">
                   {filteredVisits.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-8 text-center text-[#71717a]">
+                      <td colSpan={6} className="py-8 text-center text-gray-400 dark:text-[#71717a]">
                         No visit records match your selected criteria.
                       </td>
                     </tr>
@@ -753,39 +753,39 @@ export default function AnalyticsDashboard({
                     filteredVisits.slice(0, 50).map((v) => {
                       const category = classifyUserAgent(v.botName || v.userAgent).category;
                       return (
-                        <tr key={v.id} className="hover:bg-[#191922] transition-colors">
+                        <tr key={v.id} className="hover:bg-gray-50 dark:hover:bg-[#191922] transition-colors">
                           <td className="py-3">
                             {v.isBot ? (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#261c38] text-purple-300 border border-purple-800/40">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 dark:bg-[#261c38] text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40">
                                 <Bot className="w-3 h-3" /> BOT
                               </span>
                             ) : (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#14291f] text-emerald-300 border border-emerald-800/40">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-[#14291f] text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40">
                                 <Users className="w-3 h-3" /> USER
                               </span>
                             )}
                           </td>
-                          <td className="py-3 font-mono text-white text-[11px]">
+                          <td className="py-3 font-mono text-gray-900 dark:text-white text-[11px]">
                             {v.path}
                           </td>
-                          <td className="py-3 font-mono text-[#a1a1aa] text-[11px]">
-                            {v.ip || <span className="text-[#52525b]">—</span>}
+                          <td className="py-3 font-mono text-gray-600 dark:text-[#a1a1aa] text-[11px]">
+                            {v.ip || <span className="text-gray-400 dark:text-[#52525b]">—</span>}
                           </td>
                           <td className="py-3">
-                            <div className="font-semibold text-white">
+                            <div className="font-semibold text-gray-900 dark:text-white">
                               {v.botName || "Browser Client"}
                             </div>
-                            <div className="text-[10px] text-[#71717a]">
+                            <div className="text-[10px] text-gray-500 dark:text-[#71717a]">
                               {formatBotCategoryLabel(category)}
                             </div>
                           </td>
                           <td
-                            className="py-3 text-[#71717a] font-mono text-[11px] truncate max-w-xs"
+                            className="py-3 text-gray-500 dark:text-[#71717a] font-mono text-[11px] truncate max-w-xs"
                             title={v.userAgent}
                           >
                             {v.userAgent}
                           </td>
-                          <td className="py-3 text-right font-mono text-[#a1a1aa] text-[11px] whitespace-nowrap">
+                          <td className="py-3 text-right font-mono text-gray-600 dark:text-[#a1a1aa] text-[11px] whitespace-nowrap">
                             {new Date(v.createdAt).toLocaleString([], {
                               month: "short",
                               day: "numeric",
@@ -813,95 +813,95 @@ export default function AnalyticsDashboard({
           {/* 5 FINANCIAL KPI CARDS */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {/* Card 1: Net Realized Revenue */}
-            <div className="bg-[#141419] border border-[#d4af37]/40 rounded-2xl p-5 shadow-md relative overflow-hidden bg-gradient-to-br from-[#1a1820] to-[#141419]">
-              <div className="flex items-center justify-between text-[#e5c158] mb-2">
+            <div className="bg-gradient-to-br from-amber-50 to-white dark:from-[#1a1820] dark:to-[#141419] border border-amber-300/70 dark:border-[#d4af37]/40 rounded-2xl p-5 shadow-xs relative overflow-hidden transition-colors">
+              <div className="flex items-center justify-between text-amber-700 dark:text-[#e5c158] mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider">
                   Net Realized Revenue
                 </span>
-                <DollarSign className="w-4 h-4 text-[#e5c158]" />
+                <DollarSign className="w-4 h-4 text-amber-600 dark:text-[#e5c158]" />
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-[#e5c158] font-mono tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-amber-700 dark:text-[#e5c158] font-mono tabular-nums">
                 ${financials.netRevenue.toLocaleString()}
               </div>
-              <p className="text-[11px] text-[#a1a1aa] mt-1.5">
+              <p className="text-[11px] text-gray-500 dark:text-[#a1a1aa] mt-1.5">
                 Gross sales minus cancellations
               </p>
             </div>
 
             {/* Card 2: Gross Cake Revenue */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider">
                   Gross Cake Sales
                 </span>
-                <DollarSign className="w-4 h-4 text-emerald-400" />
+                <DollarSign className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white font-mono tabular-nums">
                 ${financials.grossRevenue.toLocaleString()}
               </div>
-              <p className="text-[11px] text-[#71717a] mt-1.5">
+              <p className="text-[11px] text-gray-500 dark:text-[#71717a] mt-1.5">
                 Total value of placed orders
               </p>
             </div>
 
             {/* Card 3: Cancelled Revenue Loss */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider">
                   Cancelled Revenue
                 </span>
-                <XCircle className="w-4 h-4 text-rose-400" />
+                <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-rose-400 font-mono tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-rose-600 dark:text-rose-400 font-mono tabular-nums">
                 -${financials.cancelledRevenue.toLocaleString()}
               </div>
-              <p className="text-[11px] text-rose-400/80 mt-1.5">
+              <p className="text-[11px] text-rose-600/80 dark:text-rose-400/80 mt-1.5">
                 Refunded / voided order value
               </p>
             </div>
 
             {/* Card 4: Total Cakes Sold */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider">
                   Total Cakes Sold
                 </span>
-                <ShoppingBag className="w-4 h-4 text-blue-400" />
+                <ShoppingBag className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white font-mono tabular-nums">
                 {financials.totalBoughtCount}
               </div>
-              <p className="text-[11px] text-[#71717a] mt-1.5">
+              <p className="text-[11px] text-gray-500 dark:text-[#71717a] mt-1.5">
                 Gross units purchased
               </p>
             </div>
 
             {/* Card 5: Cancelled Orders Count */}
-            <div className="bg-[#141419] border border-[#252530] rounded-2xl p-5 shadow-sm">
-              <div className="flex items-center justify-between text-[#a1a1aa] mb-2">
+            <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-5 shadow-xs transition-colors">
+              <div className="flex items-center justify-between text-gray-500 dark:text-[#a1a1aa] mb-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider">
                   Cancelled Orders
                 </span>
-                <XCircle className="w-4 h-4 text-rose-400" />
+                <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400" />
               </div>
-              <div className="text-2xl sm:text-3xl font-extrabold text-rose-400 font-mono tabular-nums">
+              <div className="text-2xl sm:text-3xl font-extrabold text-rose-600 dark:text-rose-400 font-mono tabular-nums">
                 {financials.totalCancelledCount}
               </div>
-              <p className="text-[11px] text-[#71717a] mt-1.5">
+              <p className="text-[11px] text-gray-500 dark:text-[#71717a] mt-1.5">
                 Total voided transactions
               </p>
             </div>
           </div>
 
           {/* PER-CAKE BREAKDOWN TABLE */}
-          <div className="bg-[#141419] border border-[#252530] rounded-2xl p-6 shadow-sm">
+          <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-6 shadow-xs transition-colors">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
               <div>
-                <h2 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                  <ShoppingBag className="w-4 h-4 text-[#e5c158]" />
+                <h2 className="text-base font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4 text-amber-600 dark:text-[#e5c158]" />
                   Per-Cake Sales Performance & Revenue Realization
                 </h2>
-                <p className="text-xs text-[#a1a1aa] mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-[#a1a1aa] mt-0.5">
                   Detailed breakdown of bought quantities, cancellations, and net revenue per catalog cake
                 </p>
               </div>
@@ -910,7 +910,7 @@ export default function AnalyticsDashboard({
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-[#2c2c38] text-[#71717a]">
+                  <tr className="border-b border-gray-200 dark:border-[#2c2c38] text-gray-500 dark:text-[#71717a]">
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">Cake Product</th>
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px] text-center">Bought</th>
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px] text-center">Cancelled</th>
@@ -918,25 +918,25 @@ export default function AnalyticsDashboard({
                     <th className="pb-3 font-semibold uppercase tracking-wider text-[10px] text-right">Net Revenue</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#20202a]">
+                <tbody className="divide-y divide-gray-100 dark:divide-[#20202a]">
                   {financials.perCake.map((item) => {
                     const netActive = item.boughtCount - item.cancelledCount;
                     return (
-                      <tr key={item.cakeId} className="hover:bg-[#191922] transition-colors">
+                      <tr key={item.cakeId} className="hover:bg-gray-50 dark:hover:bg-[#191922] transition-colors">
                         <td className="py-3.5">
-                          <div className="font-semibold text-white">{item.cakeName}</div>
-                          <div className="text-[10px] font-mono text-[#71717a]">{item.cakeId}</div>
+                          <div className="font-semibold text-gray-900 dark:text-white">{item.cakeName}</div>
+                          <div className="text-[10px] font-mono text-gray-500 dark:text-[#71717a]">{item.cakeId}</div>
                         </td>
-                        <td className="py-3.5 text-center font-mono font-bold text-emerald-400">
+                        <td className="py-3.5 text-center font-mono font-bold text-emerald-600 dark:text-emerald-400">
                           {item.boughtCount}
                         </td>
-                        <td className="py-3.5 text-center font-mono font-bold text-rose-400">
+                        <td className="py-3.5 text-center font-mono font-bold text-rose-600 dark:text-rose-400">
                           {item.cancelledCount}
                         </td>
-                        <td className="py-3.5 text-center font-mono font-bold text-white">
+                        <td className="py-3.5 text-center font-mono font-bold text-gray-900 dark:text-white">
                           {netActive}
                         </td>
-                        <td className="py-3.5 text-right font-mono font-extrabold text-[#e5c158] text-sm tabular-nums">
+                        <td className="py-3.5 text-right font-mono font-extrabold text-amber-700 dark:text-[#e5c158] text-sm tabular-nums">
                           ${item.netRevenue.toLocaleString()}
                         </td>
                       </tr>
@@ -944,20 +944,20 @@ export default function AnalyticsDashboard({
                   })}
                 </tbody>
                 <tfoot>
-                  <tr className="border-t-2 border-[#2c2c38] font-bold text-white">
+                  <tr className="border-t-2 border-gray-200 dark:border-[#2c2c38] font-bold text-gray-900 dark:text-white">
                     <td className="pt-4 font-semibold uppercase tracking-wider text-[11px]">
                       Catalog Grand Total
                     </td>
-                    <td className="pt-4 text-center font-mono text-emerald-400">
+                    <td className="pt-4 text-center font-mono text-emerald-600 dark:text-emerald-400">
                       {financials.totalBoughtCount}
                     </td>
-                    <td className="pt-4 text-center font-mono text-rose-400">
+                    <td className="pt-4 text-center font-mono text-rose-600 dark:text-rose-400">
                       {financials.totalCancelledCount}
                     </td>
-                    <td className="pt-4 text-center font-mono text-white">
+                    <td className="pt-4 text-center font-mono text-gray-900 dark:text-white">
                       {financials.totalBoughtCount - financials.totalCancelledCount}
                     </td>
-                    <td className="pt-4 text-right font-mono text-[#e5c158] text-base tabular-nums">
+                    <td className="pt-4 text-right font-mono text-amber-700 dark:text-[#e5c158] text-base tabular-nums">
                       ${financials.netRevenue.toLocaleString()}
                     </td>
                   </tr>
@@ -972,18 +972,18 @@ export default function AnalyticsDashboard({
       {/* SECTION C: ORDER MANAGEMENT & CANCELLATIONS (ADMIN ONLY)             */}
       {/* ==================================================================== */}
       {isAdmin && activeTab === "orders" && (
-        <div className="bg-[#141419] border border-[#252530] rounded-2xl p-6 shadow-sm">
+        <div className="bg-white dark:bg-[#141419] border border-gray-200 dark:border-[#252530] rounded-2xl p-6 shadow-xs transition-colors">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
             <div>
-              <h2 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 text-emerald-400" />
+              <h2 className="text-base font-bold text-gray-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <ShoppingBag className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 Live Customer Orders & Cancellation Terminal
               </h2>
-              <p className="text-xs text-[#a1a1aa] mt-0.5">
+              <p className="text-xs text-gray-500 dark:text-[#a1a1aa] mt-0.5">
                 Review and actively cancel customer orders via authenticated PATCH /api/admin/orders/[id]
               </p>
             </div>
-            <div className="text-xs font-mono text-[#a1a1aa]">
+            <div className="text-xs font-mono text-gray-500 dark:text-[#a1a1aa]">
               {orders.length} Total Orders Recorded
             </div>
           </div>
@@ -991,7 +991,7 @@ export default function AnalyticsDashboard({
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#2c2c38] text-[#71717a]">
+                <tr className="border-b border-gray-200 dark:border-[#2c2c38] text-gray-500 dark:text-[#71717a]">
                   <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">Order ID</th>
                   <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">Cake</th>
                   <th className="pb-3 font-semibold uppercase tracking-wider text-[10px]">Customer</th>
@@ -1001,10 +1001,10 @@ export default function AnalyticsDashboard({
                   <th className="pb-3 font-semibold uppercase tracking-wider text-[10px] text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#20202a]">
+              <tbody className="divide-y divide-gray-100 dark:divide-[#20202a]">
                 {orders.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="py-8 text-center text-[#71717a]">
+                    <td colSpan={7} className="py-8 text-center text-gray-400 dark:text-[#71717a]">
                       No orders found in the database.
                     </td>
                   </tr>
@@ -1013,30 +1013,30 @@ export default function AnalyticsDashboard({
                     const total = o.price * o.quantity;
                     const isCancelled = o.status === "CANCELLED";
                     return (
-                      <tr key={o.id} className="hover:bg-[#191922] transition-colors">
-                        <td className="py-3.5 font-mono text-[11px] text-[#71717a]">
+                      <tr key={o.id} className="hover:bg-gray-50 dark:hover:bg-[#191922] transition-colors">
+                        <td className="py-3.5 font-mono text-[11px] text-gray-500 dark:text-[#71717a]">
                           {o.id.length > 16 ? `${o.id.slice(0, 14)}...` : o.id}
                         </td>
-                        <td className="py-3.5 font-semibold text-white">
+                        <td className="py-3.5 font-semibold text-gray-900 dark:text-white">
                           {o.cakeName}
                         </td>
                         <td className="py-3.5">
-                          <div className="text-white font-medium">{o.customerName}</div>
-                          <div className="text-[10px] font-mono text-[#71717a]">{o.customerEmail}</div>
+                          <div className="text-gray-900 dark:text-white font-medium">{o.customerName}</div>
+                          <div className="text-[10px] font-mono text-gray-500 dark:text-[#71717a]">{o.customerEmail}</div>
                         </td>
-                        <td className="py-3.5 text-center font-mono font-bold text-white">
+                        <td className="py-3.5 text-center font-mono font-bold text-gray-900 dark:text-white">
                           {o.quantity}
                         </td>
-                        <td className="py-3.5 text-right font-mono font-bold text-[#e5c158] tabular-nums">
+                        <td className="py-3.5 text-right font-mono font-bold text-amber-700 dark:text-[#e5c158] tabular-nums">
                           ${total.toLocaleString()}
                         </td>
                         <td className="py-3.5 text-center">
                           {isCancelled ? (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#34161b] text-rose-400 border border-rose-800/40">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 dark:bg-[#34161b] text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-800/40">
                               <XCircle className="w-3 h-3" /> CANCELLED
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#14291f] text-emerald-400 border border-emerald-800/40">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-[#14291f] text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40">
                               ACTIVE
                             </span>
                           )}
@@ -1047,12 +1047,12 @@ export default function AnalyticsDashboard({
                               type="button"
                               onClick={() => handleCancelOrder(o.id)}
                               disabled={cancellingId === o.id}
-                              className="px-3 py-1 text-[11px] font-semibold text-rose-300 bg-rose-950/60 hover:bg-rose-900/60 border border-rose-700/50 rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
+                              className="px-3 py-1 text-[11px] font-semibold text-rose-700 dark:text-rose-300 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-700/50 rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
                             >
                               {cancellingId === o.id ? "Cancelling..." : "Cancel Order"}
                             </button>
                           ) : (
-                            <span className="text-[11px] text-[#52525b] italic font-mono">
+                            <span className="text-[11px] text-gray-400 dark:text-[#52525b] italic font-mono">
                               Voided
                             </span>
                           )}

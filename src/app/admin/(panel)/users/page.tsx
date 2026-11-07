@@ -10,15 +10,15 @@ export default async function AdminUsersPage() {
 
   if (session?.role !== "ADMIN") {
     return (
-      <div className="bg-white rounded-2xl border border-gray-200 p-8 text-center max-w-lg mx-auto my-12 shadow-xs space-y-4">
-        <div className="w-12 h-12 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto">
+      <div className="bg-white dark:bg-[#141416] rounded-2xl border border-gray-200 dark:border-[#202025] p-8 text-center max-w-lg mx-auto my-12 shadow-xs space-y-4">
+        <div className="w-12 h-12 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center mx-auto">
           <ShieldAlert className="w-6 h-6" />
         </div>
-        <h2 className="text-lg font-bold text-gray-900">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
           Administrator Role Required
         </h2>
-        <p className="text-xs text-gray-500 leading-relaxed">
-          Your current account is authenticated as <strong className="text-purple-600">SEO Specialist</strong>. Managing users, invitations, and administrative roles is restricted to Administrators.
+        <p className="text-xs text-gray-500 dark:text-neutral-400 leading-relaxed">
+          Your current account is authenticated as <strong className="text-purple-600 dark:text-purple-400">SEO Specialist</strong>. Managing users, invitations, and administrative roles is restricted to Administrators.
         </p>
       </div>
     );

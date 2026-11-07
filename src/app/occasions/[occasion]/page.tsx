@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, ArrowRight, Sparkles } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import {
   getAllCakes,
   getPageSeo,
@@ -170,50 +172,52 @@ export default async function OccasionPage({ params }: Props) {
         />
       ))}
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] flex flex-col transition-colors duration-200">
+        <Navbar />
+
         {/* Breadcrumb Navigation */}
         <nav
           aria-label="Breadcrumb"
-          className="bg-[#fafafc] border-b border-[#e5e5ea] py-3 px-4 sm:px-8"
+          className="bg-[#fafafc] dark:bg-[#121214] border-b border-[#e5e5ea] dark:border-[#202024] py-3 px-4 sm:px-8"
         >
-          <div className="max-w-[1200px] mx-auto flex items-center flex-wrap gap-2 text-[13px] text-[#707070]">
-            <Link href="/" className="hover:text-[#1d1d1f] hover:underline">
+          <div className="max-w-[1200px] mx-auto flex items-center flex-wrap gap-2 text-[13px] text-[#707070] dark:text-[#a1a1a6]">
+            <Link href="/" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
               Home
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <Link href="/cakes" className="hover:text-[#1d1d1f] hover:underline">
+            <Link href="/cakes" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
               Occasions
             </Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-[#1d1d1f] font-medium">{occInfo.name}</span>
+            <span className="text-[#1d1d1f] dark:text-[#f5f5f7] font-medium">{occInfo.name}</span>
           </div>
         </nav>
 
         {/* Hero Section */}
-        <header className="bg-gradient-to-b from-[#fafafc] to-white py-16 sm:py-24 border-b border-[#f0f0f4]">
+        <header className="bg-gradient-to-b from-[#fafafc] to-white dark:from-[#121214] dark:to-[#000000] py-16 sm:py-24 border-b border-[#f0f0f4] dark:border-[#202024]">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-8">
-            <div className="inline-flex items-center gap-2 bg-[#0071e3]/10 text-[#0071e3] text-[12px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 bg-[#0071e3]/10 dark:bg-[#2997ff]/15 text-[#0071e3] dark:text-[#2997ff] text-[12px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-4">
               <Sparkles className="w-3.5 h-3.5" />
               Haute Occasion Collection
             </div>
-            <h1 className="text-[36px] sm:text-[52px] font-bold text-[#1d1d1f] tracking-tight mb-4">
+            <h1 className="text-[36px] sm:text-[52px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-4">
               {occInfo.name} Architectural Cakes
             </h1>
-            <p className="text-[19px] text-[#474747] max-w-[760px] leading-relaxed">
+            <p className="text-[19px] text-[#474747] dark:text-[#a1a1a6] max-w-[760px] leading-relaxed">
               {pageSeo?.metaDescription || occInfo.tagline}
             </p>
           </div>
         </header>
 
         {/* Cake Listing Grid */}
-        <main className="max-w-[1200px] mx-auto px-4 sm:px-8 py-16">
+        <main className="max-w-[1200px] mx-auto px-4 sm:px-8 py-16 flex-grow w-full">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-[24px] font-semibold text-[#1d1d1f] tracking-tight">
+            <h2 className="text-[24px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight">
               Available Designs ({matchingCakes.length})
             </h2>
             <Link
               href="/cakes"
-              className="text-[14px] text-[#0071e3] hover:underline font-medium"
+              className="text-[14px] text-[#0071e3] dark:text-[#2997ff] hover:underline font-medium"
             >
               View All Occasions &rarr;
             </Link>
@@ -223,11 +227,11 @@ export default async function OccasionPage({ params }: Props) {
             {matchingCakes.map((cake) => (
               <article
                 key={cake.id}
-                className="bg-white rounded-[24px] overflow-hidden border border-[#e5e5ea] hover:shadow-xl transition-all duration-300 flex flex-col group"
+                className="bg-white dark:bg-[#141416] rounded-[24px] overflow-hidden border border-[#e5e5ea] dark:border-[#222226] hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/60 transition-all duration-300 flex flex-col group"
               >
                 <Link
                   href={`/cakes/${cake.slug}`}
-                  className="relative aspect-[4/3] w-full bg-[#f5f5f7] overflow-hidden block"
+                  className="relative aspect-[4/3] w-full bg-[#f5f5f7] dark:bg-[#1c1c1f] overflow-hidden block"
                 >
                   <Image
                     src={cake.image}
@@ -241,9 +245,9 @@ export default async function OccasionPage({ params }: Props) {
                       New
                     </span>
                   )}
-                  <div className="absolute top-4 right-4 bg-white/80 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1.5 text-[11px] font-medium text-[#474747]">
+                  <div className="absolute top-4 right-4 bg-white/80 dark:bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-full flex items-center gap-1.5 text-[11px] font-medium text-[#474747] dark:text-[#d1d1d6] border border-black/5 dark:border-white/10">
                     <span
-                      className="w-2.5 h-2.5 rounded-full border border-black/10"
+                      className="w-2.5 h-2.5 rounded-full border border-black/10 dark:border-white/20"
                       style={{ backgroundColor: cake.finishColor }}
                     />
                     {cake.swatchName}
@@ -253,35 +257,35 @@ export default async function OccasionPage({ params }: Props) {
                 <div className="p-6 flex flex-col justify-between flex-grow">
                   <div>
                     <div className="flex items-baseline justify-between gap-2 mb-2">
-                      <h3 className="text-[20px] font-semibold text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors">
+                      <h3 className="text-[20px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] group-hover:text-[#0071e3] dark:group-hover:text-[#2997ff] transition-colors">
                         <Link href={`/cakes/${cake.slug}`}>{cake.name}</Link>
                       </h3>
-                      <span className="text-[22px] font-bold text-[#1d1d1f]">
+                      <span className="text-[22px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7]">
                         ${cake.price}
                       </span>
                     </div>
 
-                    <p className="text-[14px] text-[#707070] line-clamp-2 leading-relaxed mb-4">
+                    <p className="text-[14px] text-[#707070] dark:text-[#a1a1a6] line-clamp-2 leading-relaxed mb-4">
                       {cake.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2 text-[12px] text-[#474747] mb-6">
-                      <span className="bg-[#f5f5f7] px-2.5 py-1 rounded-md">
+                    <div className="flex flex-wrap gap-2 text-[12px] text-[#474747] dark:text-[#d1d1d6] mb-6">
+                      <span className="bg-[#f5f5f7] dark:bg-[#202024] px-2.5 py-1 rounded-md">
                         {cake.servings}
                       </span>
-                      <span className="bg-[#f5f5f7] px-2.5 py-1 rounded-md">
+                      <span className="bg-[#f5f5f7] dark:bg-[#202024] px-2.5 py-1 rounded-md">
                         {cake.tiers} {cake.tiers === 1 ? "Tier" : "Tiers"}
                       </span>
-                      <span className="bg-[#f5f5f7] px-2.5 py-1 rounded-md">
+                      <span className="bg-[#f5f5f7] dark:bg-[#202024] px-2.5 py-1 rounded-md">
                         Lead: {cake.leadTime}
                       </span>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[#f5f5f7] flex items-center justify-between">
+                  <div className="pt-4 border-t border-[#f5f5f7] dark:border-[#202024] flex items-center justify-between">
                     <Link
                       href={`/cakes/${cake.slug}`}
-                      className="text-[14px] text-[#0071e3] font-medium hover:underline inline-flex items-center gap-1"
+                      className="text-[14px] text-[#0071e3] dark:text-[#2997ff] font-medium hover:underline inline-flex items-center gap-1"
                     >
                       Specifications & Details
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -294,20 +298,20 @@ export default async function OccasionPage({ params }: Props) {
 
           {/* Occasion FAQs */}
           {pageSeo?.faqs && pageSeo.faqs.length > 0 && (
-            <section className="mt-20 pt-12 border-t border-[#e5e5ea] max-w-[800px]">
-              <h2 className="text-[24px] font-bold text-[#1d1d1f] tracking-tight mb-6">
+            <section className="mt-20 pt-12 border-t border-[#e5e5ea] dark:border-[#202024] max-w-[800px]">
+              <h2 className="text-[24px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-6">
                 Frequently Asked Questions about {occInfo.name} Cakes
               </h2>
               <div className="space-y-4">
                 {pageSeo.faqs.map((faq, i) => (
                   <div
                     key={i}
-                    className="p-5 rounded-[16px] border border-[#e5e5ea] bg-[#fafafc]"
+                    className="p-5 rounded-[16px] border border-[#e5e5ea] dark:border-[#202024] bg-[#fafafc] dark:bg-[#141416]"
                   >
-                    <h3 className="font-semibold text-[16px] text-[#1d1d1f] mb-2">
+                    <h3 className="font-semibold text-[16px] text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">
                       {faq.question}
                     </h3>
-                    <p className="text-[14px] text-[#707070] leading-relaxed">
+                    <p className="text-[14px] text-[#707070] dark:text-[#a1a1a6] leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>
@@ -317,8 +321,8 @@ export default async function OccasionPage({ params }: Props) {
           )}
 
           {/* Deep Internal Linking: Cross-links to other Occasions */}
-          <section className="mt-20 pt-12 border-t border-[#e5e5ea]">
-            <h2 className="text-[22px] font-bold text-[#1d1d1f] tracking-tight mb-6">
+          <section className="mt-20 pt-12 border-t border-[#e5e5ea] dark:border-[#202024]">
+            <h2 className="text-[22px] font-bold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-tight mb-6">
               Explore Other Cake Occasions
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -326,12 +330,12 @@ export default async function OccasionPage({ params }: Props) {
                 <Link
                   key={k}
                   href={`/occasions/${k}`}
-                  className="p-5 rounded-[18px] bg-[#f5f5f7] hover:bg-[#e8e8ed] transition-all group block"
+                  className="p-5 rounded-[18px] bg-[#f5f5f7] dark:bg-[#141416] hover:bg-[#e8e8ed] dark:hover:bg-[#1c1c20] border border-transparent dark:border-[#202024] transition-all group block"
                 >
-                  <div className="text-[11px] uppercase tracking-wider text-[#707070] font-semibold mb-1">
+                  <div className="text-[11px] uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6] font-semibold mb-1">
                     Occasion
                   </div>
-                  <div className="font-semibold text-[16px] text-[#1d1d1f] group-hover:text-[#0071e3] transition-colors flex items-center justify-between">
+                  <div className="font-semibold text-[16px] text-[#1d1d1f] dark:text-[#f5f5f7] group-hover:text-[#0071e3] dark:group-hover:text-[#2997ff] transition-colors flex items-center justify-between">
                     <span>{info.name}</span>
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
@@ -340,6 +344,8 @@ export default async function OccasionPage({ params }: Props) {
             </div>
           </section>
         </main>
+
+        <Footer />
       </div>
     </>
   );

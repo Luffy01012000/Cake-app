@@ -1,13 +1,17 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Lock } from "lucide-react";
 
 export default function Footer({
   onOpenConfigurator,
 }: {
   onSelectOccasion?: (occ: string) => void;
-  onOpenConfigurator: () => void;
+  onOpenConfigurator?: () => void;
 }) {
+  const router = useRouter();
   return (
     <footer className="w-full bg-[#f5f5f7] dark:bg-[#121214] text-[#707070] dark:text-[#a1a1a6] text-[12px] pt-14 pb-16 border-t border-[#d6d6d6]/40 dark:border-[#2c2c2e] transition-colors">
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
@@ -63,7 +67,13 @@ export default function Footer({
               </li>
               <li>
                 <button
-                  onClick={onOpenConfigurator}
+                  onClick={() => {
+                    if (onOpenConfigurator) {
+                      onOpenConfigurator();
+                    } else {
+                      router.push("/#atelier");
+                    }
+                  }}
                   className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline cursor-pointer"
                 >
                   Cake Architecture Studio

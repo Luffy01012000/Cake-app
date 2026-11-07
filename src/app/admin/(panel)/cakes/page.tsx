@@ -13,10 +13,10 @@ export default async function AdminCakesListPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
             Cake Portfolio & SEO Inventory
           </h1>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-neutral-400 mt-1">
             Manage individual cake pages, customized structured data, alt tags, and search engine SERP snippets.
           </p>
         </div>
@@ -31,10 +31,10 @@ export default async function AdminCakesListPage() {
       </div>
 
       {/* Cakes Table */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#141416] rounded-2xl border border-gray-200 dark:border-[#202025] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-gray-50 text-gray-500 uppercase font-semibold border-b border-gray-200">
+            <thead className="bg-gray-50 dark:bg-[#101012] text-gray-500 dark:text-neutral-400 uppercase font-semibold border-b border-gray-200 dark:border-[#202025]">
               <tr>
                 <th className="py-3.5 px-4">Visual & Name</th>
                 <th className="py-3.5 px-4">Occasion</th>
@@ -46,7 +46,7 @@ export default async function AdminCakesListPage() {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 text-gray-700">
+            <tbody className="divide-y divide-gray-100 dark:divide-[#202025] text-gray-700 dark:text-neutral-300">
               {cakes.map((cake) => {
                 const analysis = analyzeSeo(
                   cake.metaTitle,
@@ -54,11 +54,11 @@ export default async function AdminCakesListPage() {
                   cake.imageAlt
                 );
                 return (
-                  <tr key={cake.id} className="hover:bg-gray-50/50 transition-colors">
+                  <tr key={cake.id} className="hover:bg-gray-50/50 dark:hover:bg-[#18181c] transition-colors">
                     {/* Visual & Name */}
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-3">
-                        <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
+                        <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-gray-100 dark:bg-[#1e1e24] shrink-0 border border-gray-200 dark:border-[#282830]">
                           <Image
                             src={cake.image}
                             alt={cake.imageAlt || cake.name}
@@ -70,11 +70,11 @@ export default async function AdminCakesListPage() {
                         <div>
                           <Link
                             href={`/admin/cakes/${cake.id}`}
-                            className="font-semibold text-gray-900 hover:text-[#0071e3] transition-colors"
+                            className="font-semibold text-gray-900 dark:text-white hover:text-[#0071e3] dark:hover:text-[#3898ec] transition-colors"
                           >
                             {cake.name}
                           </Link>
-                          <div className="text-[11px] text-gray-400 font-mono">
+                          <div className="text-[11px] text-gray-400 dark:text-neutral-500 font-mono">
                             /cakes/{cake.slug}
                           </div>
                         </div>
@@ -83,13 +83,13 @@ export default async function AdminCakesListPage() {
 
                     {/* Occasion */}
                     <td className="py-3.5 px-4">
-                      <span className="px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 text-[11px] font-medium">
+                      <span className="px-2.5 py-1 rounded-full bg-gray-100 dark:bg-[#1e1e24] text-gray-700 dark:text-neutral-300 text-[11px] font-medium">
                         {cake.occasion}
                       </span>
                     </td>
 
                     {/* Price */}
-                    <td className="py-3.5 px-4 font-mono font-bold text-gray-900">
+                    <td className="py-3.5 px-4 font-mono font-bold text-gray-900 dark:text-white">
                       ${cake.price}
                     </td>
 
@@ -98,8 +98,8 @@ export default async function AdminCakesListPage() {
                       <span
                         className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ${
                           analysis.titleStatus === "good"
-                            ? "bg-emerald-50 text-emerald-700"
-                            : "bg-amber-50 text-amber-700"
+                            ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300"
+                            : "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300"
                         }`}
                       >
                         {analysis.titleLength} chars
@@ -111,8 +111,8 @@ export default async function AdminCakesListPage() {
                       <span
                         className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium ${
                           analysis.descriptionStatus === "good"
-                            ? "bg-emerald-50 text-emerald-700"
-                            : "bg-amber-50 text-amber-700"
+                            ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300"
+                            : "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300"
                         }`}
                       >
                         {analysis.descriptionLength} chars
@@ -122,12 +122,12 @@ export default async function AdminCakesListPage() {
                     {/* Alt Text */}
                     <td className="py-3.5 px-4">
                       {analysis.hasAltText ? (
-                        <span className="text-emerald-600 flex items-center gap-1">
+                        <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           Set
                         </span>
                       ) : (
-                        <span className="text-amber-600 flex items-center gap-1 font-medium">
+                        <span className="text-amber-600 dark:text-amber-400 flex items-center gap-1 font-medium">
                           <AlertTriangle className="w-3.5 h-3.5" />
                           Missing
                         </span>
@@ -137,9 +137,9 @@ export default async function AdminCakesListPage() {
                     {/* JSON-LD */}
                     <td className="py-3.5 px-4">
                       {cake.rawJsonLd && cake.rawJsonLd.trim() ? (
-                        <span className="text-blue-600 font-medium">Override</span>
+                        <span className="text-blue-600 dark:text-blue-400 font-medium">Override</span>
                       ) : (
-                        <span className="text-emerald-600">Auto</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">Auto</span>
                       )}
                     </td>
 
@@ -149,14 +149,14 @@ export default async function AdminCakesListPage() {
                         <Link
                           href={`/cakes/${cake.slug}`}
                           target="_blank"
-                          className="p-1 text-gray-400 hover:text-gray-700"
+                          className="p-1 text-gray-400 dark:text-neutral-500 hover:text-gray-700 dark:hover:text-neutral-200"
                           title="Open Live Public Route"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                         </Link>
                         <Link
                           href={`/admin/cakes/${cake.id}`}
-                          className="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded font-medium transition-colors"
+                          className="px-2.5 py-1 bg-gray-100 dark:bg-[#1e1e24] hover:bg-gray-200 dark:hover:bg-[#282830] text-gray-800 dark:text-neutral-200 rounded font-medium transition-colors"
                         >
                           Edit
                         </Link>
