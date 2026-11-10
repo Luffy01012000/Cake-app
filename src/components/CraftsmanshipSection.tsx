@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, Sparkles, Truck, Award, HeartHandshake, CheckCircle2 } from "lucide-react";
+import { Sparkles, Truck, Award, CheckCircle2 } from "lucide-react";
 
 interface CraftsmanshipSectionProps {
   onOrderTastingFlight: () => void;

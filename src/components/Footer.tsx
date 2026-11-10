@@ -1,15 +1,17 @@
 "use client";
 
 import React from "react";
-import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Lock } from "lucide-react";
 
 export default function Footer({
-  onSelectOccasion,
   onOpenConfigurator,
 }: {
-  onSelectOccasion: (occ: string) => void;
-  onOpenConfigurator: () => void;
+  onSelectOccasion?: (occ: string) => void;
+  onOpenConfigurator?: () => void;
 }) {
+  const router = useRouter();
   return (
     <footer className="w-full bg-[#f5f5f7] dark:bg-[#121214] text-[#707070] dark:text-[#a1a1a6] text-[12px] pt-14 pb-16 border-t border-[#d6d6d6]/40 dark:border-[#2c2c2e] transition-colors">
       <div className="max-w-[1024px] mx-auto px-4 sm:px-8">
@@ -34,17 +36,20 @@ export default function Footer({
               Occasions
             </h4>
             <ul className="space-y-2">
-              {["Weddings", "Birthdays", "Anniversaries", "Baby Showers", "Galas"].map((occ) => (
-                <li key={occ}>
-                  <button
-                    onClick={() => {
-                      onSelectOccasion(occ);
-                      document.getElementById("occasions-catalog")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline cursor-pointer"
+              {[
+                { name: "Weddings", slug: "weddings" },
+                { name: "Birthdays", slug: "birthdays" },
+                { name: "Anniversaries", slug: "anniversaries" },
+                { name: "Baby Showers", slug: "baby-showers" },
+                { name: "Galas", slug: "galas" },
+              ].map((occ) => (
+                <li key={occ.slug}>
+                  <Link
+                    href={`/occasions/${occ.slug}`}
+                    className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline"
                   >
-                    {occ} Cakes
-                  </button>
+                    {occ.name} Cakes
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -52,20 +57,36 @@ export default function Footer({
 
           <div>
             <h4 className="text-[12px] font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">
-              Atelier & Services
+              Atelier & Catalog
             </h4>
             <ul className="space-y-2">
               <li>
+                <Link href="/cakes" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
+                  Full Cake Catalog
+                </Link>
+              </li>
+              <li>
                 <button
-                  onClick={onOpenConfigurator}
+                  onClick={() => {
+                    if (onOpenConfigurator) {
+                      onOpenConfigurator();
+                    } else {
+                      router.push("/#atelier");
+                    }
+                  }}
                   className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline cursor-pointer"
                 >
                   Cake Architecture Studio
                 </button>
               </li>
               <li>
-                <a href="#occasions-catalog" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
-                  Private Tasting Flight
+                <a href="/sitemap.xml" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
+                  XML Sitemap
+                </a>
+              </li>
+              <li>
+                <a href="/robots.txt" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] hover:underline">
+                  Robots & AI Directives
                 </a>
               </li>
               <li>
@@ -113,13 +134,18 @@ export default function Footer({
             Copyright © 2026 AURA Pâtisserie Haute Couture Inc. All rights reserved.
           </div>
           <div className="flex items-center gap-4 text-[11px]">
+            <Link href="/cakes" className="hover:underline hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Catalog</Link>
+            <span>•</span>
+            <Link href="/admin" className="hover:underline inline-flex items-center gap-1 text-[#0071e3] dark:text-[#2997ff] font-medium">
+              <Lock className="w-3 h-3" />
+              SEO & Admin Panel
+            </Link>
+            <span>•</span>
             <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Privacy Policy</span>
             <span>•</span>
             <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Terms of Commission</span>
             <span>•</span>
             <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Sales & Refunds</span>
-            <span>•</span>
-            <span className="hover:underline cursor-pointer hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]">Legal</span>
           </div>
         </div>
 

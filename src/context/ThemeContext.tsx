@@ -14,21 +14,20 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    // Sync theme on client mount
     const saved = localStorage.getItem("aura-theme");
-    if (saved === "dark") {
-      setIsDarkMode(true);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const shouldBeDark = saved === "dark" || (!saved && prefersDark);
+
+    if (shouldBeDark) {
       document.documentElement.classList.add("dark");
-    } else if (saved === "light") {
-      setIsDarkMode(false);
+    } else {
       document.documentElement.classList.remove("dark");
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add("dark");
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsDarkMode(shouldBeDark);
   }, []);
 
   const toggleDarkMode = () => {

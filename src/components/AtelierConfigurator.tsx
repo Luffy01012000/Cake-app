@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Sparkles, Check, Calendar, ArrowRight, ShieldCheck, Heart } from "lucide-react";
+import { Sparkles, Check, Calendar, ShieldCheck } from "lucide-react";
 import { CakeProduct, FLAVOR_PALETTES } from "../data/cakes";
 import DatePickerModal from "./DatePickerModal";
 
@@ -25,19 +25,16 @@ export default function AtelierConfigurator({
   const [flavorIndex, setFlavorIndex] = useState<number>(0);
   const [finishStyle, setFinishStyle] = useState<string>("Botanical Sugar Blooms & 24k Gold");
   const [inscription, setInscription] = useState<string>("Céleste & Julian • 2026");
-  const [deliveryDate, setDeliveryDate] = useState<string>("2026-11-20");
-  const [dietary, setDietary] = useState<string>("Standard Gourmet");
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-
-  React.useEffect(() => {
+  const [deliveryDate, setDeliveryDate] = useState<string>(() => {
     const d = new Date();
     d.setDate(d.getDate() + 5);
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
-    setDeliveryDate(`${y}-${m}-${day}`);
-  }, []);
+    return `${y}-${m}-${day}`;
+  });
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   const tierOptions = [
     {
@@ -92,7 +89,7 @@ export default function AtelierConfigurator({
       id: `atelier-${Date.now()}`,
       name: `Atelier Custom ${currentTier.name}`,
       tagline: `Bespoke ${occasion} Commission`,
-      occasion: occasion as any,
+      occasion: occasion as CakeProduct["occasion"],
       price: calculatedPrice,
       image: currentTier.image,
       finishColor: selectedFlavor.color,

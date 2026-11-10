@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, Check, ShieldCheck, Sparkles, Plus, Calendar, Clock, Users, Ruler } from "lucide-react";
+import { X, Check, ShieldCheck, Plus, Clock, Users, Ruler } from "lucide-react";
 import { CakeProduct } from "../data/cakes";
 
 interface CakeModalProps {

@@ -1,22 +1,25 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ShoppingBag, Search, Sparkles, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
 interface NavbarProps {
-  cartCount: number;
-  onOpenCart: () => void;
-  onSelectOccasion: (occ: string) => void;
-  onOpenConfigurator: () => void;
+  cartCount?: number;
+  onOpenCart?: () => void;
+  onSelectOccasion?: (occ: string) => void;
+  onOpenConfigurator?: () => void;
 }
 
 export default function Navbar({
-  cartCount,
+  cartCount = 0,
   onOpenCart,
   onSelectOccasion,
   onOpenConfigurator,
 }: NavbarProps) {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,11 +34,11 @@ export default function Navbar({
   }, []);
 
   const navLinks = [
-    { name: "Weddings", occ: "Weddings" },
-    { name: "Birthdays", occ: "Birthdays" },
-    { name: "Anniversaries", occ: "Anniversaries" },
-    { name: "Baby Showers", occ: "Baby Showers" },
-    { name: "Galas", occ: "Galas" },
+    { name: "Weddings", occ: "Weddings", slug: "weddings" },
+    { name: "Birthdays", occ: "Birthdays", slug: "birthdays" },
+    { name: "Anniversaries", occ: "Anniversaries", slug: "anniversaries" },
+    { name: "Baby Showers", occ: "Baby Showers", slug: "baby-showers" },
+    { name: "Galas", occ: "Galas", slug: "galas" },
   ];
 
   return (
@@ -49,8 +52,8 @@ export default function Navbar({
       >
         <div className="max-w-[1024px] mx-auto h-full px-4 sm:px-8 flex items-center justify-between">
           {/* Logo */}
-          <a
-            href="#"
+          <Link
+            href="/"
             className="flex items-center gap-1.5 text-[#1d1d1f] dark:text-[#f5f5f7] hover:opacity-75 transition-opacity"
           >
             <span className="font-semibold tracking-[-0.03em] text-[15px] uppercase">
@@ -59,27 +62,37 @@ export default function Navbar({
             <span className="text-[10px] uppercase tracking-widest text-[#707070] dark:text-[#a1a1a6] font-medium hidden sm:inline">
               Pâtisserie
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => (
-              <button
+              <Link
                 key={link.name}
-                onClick={() => {
-                  onSelectOccasion(link.occ);
-                  const el = document.getElementById("occasions-catalog");
-                  el?.scrollIntoView({ behavior: "smooth" });
+                href={`/occasions/${link.slug}`}
+                onClick={(e) => {
+                  if (onSelectOccasion) {
+                    e.preventDefault();
+                    onSelectOccasion(link.occ);
+                    const el = document.getElementById("occasions-catalog");
+                    el?.scrollIntoView({ behavior: "smooth" });
+                  }
                 }}
                 className="text-[12px] text-[#1d1d1f] dark:text-[#f5f5f7] hover:text-[#0071e3] dark:hover:text-[#2997ff] transition-colors font-normal tracking-[-0.01em] cursor-pointer"
               >
                 {link.name}
-              </button>
+              </Link>
             ))}
 
             {/* Atelier Studio Link */}
             <button
-              onClick={onOpenConfigurator}
+              onClick={() => {
+                if (onOpenConfigurator) {
+                  onOpenConfigurator();
+                } else {
+                  router.push("/#atelier");
+                }
+              }}
               className="text-[12px] text-[#1d1d1f] dark:text-[#f5f5f7] hover:text-[#0071e3] dark:hover:text-[#2997ff] transition-colors font-medium tracking-[-0.01em] inline-flex items-center gap-1 cursor-pointer"
             >
               <Sparkles className="w-3 h-3 text-[#b64400] dark:text-[#ff6934]" />
@@ -112,7 +125,13 @@ export default function Navbar({
             </button>
 
             <button
-              onClick={onOpenCart}
+              onClick={() => {
+                if (onOpenCart) {
+                  onOpenCart();
+                } else {
+                  router.push("/");
+                }
+              }}
               aria-label="Bag"
               className="text-[#1d1d1f] dark:text-[#f5f5f7] hover:text-[#0071e3] dark:hover:text-[#2997ff] transition-colors cursor-pointer relative p-1"
             >
@@ -130,7 +149,15 @@ export default function Navbar({
       {/* Slide-down Search Bar */}
       {searchOpen && (
         <div className="bg-[#fafafc] dark:bg-[#1c1c1e] border-b border-[#d6d6d6] dark:border-[#2c2c2e] py-4 px-6 transition-all duration-200">
-          <div className="max-w-[720px] mx-auto flex items-center gap-3">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (searchQuery.trim()) {
+                router.push(`/cakes`);
+              }
+            }}
+            className="max-w-[720px] mx-auto flex items-center gap-3"
+          >
             <Search className="w-4 h-4 text-[#707070] dark:text-[#a1a1a6]" />
             <input
               type="text"
@@ -141,12 +168,13 @@ export default function Navbar({
               autoFocus
             />
             <button
+              type="button"
               onClick={() => setSearchOpen(false)}
               className="text-[#707070] dark:text-[#a1a1a6] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] p-1 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
-          </div>
+          </form>
         </div>
       )}
     </>

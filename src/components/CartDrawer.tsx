@@ -2,7 +2,20 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, Trash2, ShieldCheck, ArrowRight, Sparkles, CheckCircle2, Minus, Plus, Calendar } from "lucide-react";
+import {
+  X,
+  Trash2,
+  ShieldCheck,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  Minus,
+  Plus,
+  Calendar,
+  AlertCircle,
+  User,
+  Mail,
+} from "lucide-react";
 import { CartItem } from "../data/cakes";
 import DatePickerModal from "./DatePickerModal";
 
@@ -24,19 +37,21 @@ export default function CartDrawer({
   onClearCart,
 }: CartDrawerProps) {
   const [giftNote, setGiftNote] = useState("");
-  const [eventDate, setEventDate] = useState("2026-11-28");
-  const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [orderConfirmed, setOrderConfirmed] = useState(false);
-  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-
-  React.useEffect(() => {
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [eventDate, setEventDate] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 4);
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
     const day = String(d.getDate()).padStart(2, "0");
-    setEventDate(`${y}-${m}-${day}`);
-  }, []);
+    return `${y}-${m}-${day}`;
+  });
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [orderConfirmed, setOrderConfirmed] = useState(false);
+  const [confirmedOrderId, setConfirmedOrderId] = useState<string>("");
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
 
   // Disable background page scrollbar when cart drawer is open
   React.useEffect(() => {
@@ -64,16 +79,76 @@ export default function CartDrawer({
   const courierFee = subtotal >= 300 ? 0 : 45;
   const grandTotal = subtotal + courierFee;
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
+    if (items.length === 0) return;
+
     setIsCheckingOut(true);
-    setTimeout(() => {
-      setIsCheckingOut(false);
+    setCheckoutError(null);
+
+    try {
+      // Sensible defaults if left empty so checkout remains seamless
+      const finalName = customerName.trim() || "Patisserie Guest";
+      const finalEmail = customerEmail.trim() || "guest@aurapatisserie.com";
+
+      const createdOrderIds: string[] = [];
+
+      for (const item of items) {
+        const notesParts: string[] = [];
+        if (item.flavorChoice) notesParts.push(`Flavor: ${item.flavorChoice}`);
+        if (item.customInscription) notesParts.push(`Plaque: "${item.customInscription}"`);
+        if (giftNote.trim()) notesParts.push(`Gift Note: ${giftNote.trim()}`);
+        const notes = notesParts.join(" | ") || undefined;
+
+        const res = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            cakeId: item.cake.id,
+            cakeName: item.cake.name,
+            customerName: finalName,
+            customerEmail: finalEmail,
+            price: item.cake.price,
+            quantity: item.quantity,
+            deliveryDate: item.deliveryDate || eventDate,
+            notes,
+          }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Checkout failed (${res.status})`);
+        }
+
+        const data = await res.json();
+        const createdId = data.order?.id || data.id;
+        if (createdId) {
+          createdOrderIds.push(createdId);
+        }
+      }
+
+      // Success: clear cart and transition to confirmation view
+      onClearCart();
+      setConfirmedOrderId(
+        createdOrderIds.join(", ") || `AUR-${Date.now().toString().slice(-6)}`
+      );
       setOrderConfirmed(true);
-    }, 1500);
+    } catch (err: unknown) {
+      console.error("Checkout failed:", err);
+      setCheckoutError(
+        (err as Error).message ||
+          "An error occurred while placing your order. Please try again."
+      );
+    } finally {
+      setIsCheckingOut(false);
+    }
   };
 
   const handleReset = () => {
     setOrderConfirmed(false);
+    setConfirmedOrderId("");
+    setCheckoutError(null);
     onClearCart();
     onClose();
   };
@@ -130,7 +205,9 @@ export default function CartDrawer({
             <div className="p-4 bg-[#f5f5f7] dark:bg-[#202023] border border-transparent dark:border-[#2c2c2e] rounded-2xl w-full text-xs text-[#474747] dark:text-[#d1d1d6] space-y-1">
               <div className="flex justify-between">
                 <span>Confirmation ID:</span>
-                <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">AUR-2026-9812</span>
+                <span className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] font-mono">
+                  {confirmedOrderId || "AUR-2026-9812"}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span>Delivery Date:</span>
@@ -257,6 +334,41 @@ export default function CartDrawer({
               </div>
             </div>
 
+            {/* Guest Contact Details for Order */}
+            <div className="p-4 rounded-2xl border border-[#d6d6d6] dark:border-[#38383a] space-y-3 bg-white dark:bg-[#202023]">
+              <span className="block text-xs font-semibold uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6]">
+                Client & Delivery Details
+              </span>
+              <div className="space-y-2">
+                <div className="relative flex items-center">
+                  <User className="w-4 h-4 text-[#707070] dark:text-[#a1a1a6] absolute left-3 pointer-events-none" />
+                  <input
+                    type="text"
+                    placeholder="Full name (e.g. Eleanor Vance)"
+                    value={customerName}
+                    onChange={(e) => {
+                      setCustomerName(e.target.value);
+                      if (checkoutError) setCheckoutError(null);
+                    }}
+                    className="w-full text-sm pl-9 pr-3 py-2 rounded-xl border border-black/10 dark:border-white/10 bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] placeholder:text-[#707070] dark:placeholder:text-[#a1a1a6] focus:border-[#0071e3] focus:outline-none transition-colors"
+                  />
+                </div>
+                <div className="relative flex items-center">
+                  <Mail className="w-4 h-4 text-[#707070] dark:text-[#a1a1a6] absolute left-3 pointer-events-none" />
+                  <input
+                    type="email"
+                    placeholder="Email address for order tracking"
+                    value={customerEmail}
+                    onChange={(e) => {
+                      setCustomerEmail(e.target.value);
+                      if (checkoutError) setCheckoutError(null);
+                    }}
+                    className="w-full text-sm pl-9 pr-3 py-2 rounded-xl border border-black/10 dark:border-white/10 bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] placeholder:text-[#707070] dark:placeholder:text-[#a1a1a6] focus:border-[#0071e3] focus:outline-none transition-colors"
+                  />
+                </div>
+              </div>
+            </div>
+
             {/* Complimentary Gift Card Note */}
             <div className="p-4 rounded-2xl border border-[#d6d6d6] dark:border-[#38383a] space-y-2 bg-white dark:bg-[#202023]">
               <label className="block text-xs font-semibold uppercase tracking-wider text-[#707070] dark:text-[#a1a1a6]">
@@ -284,6 +396,21 @@ export default function CartDrawer({
         {/* Footer Checkout Summary */}
         {!orderConfirmed && items.length > 0 && (
           <div className="p-6 border-t border-[#f5f5f7] dark:border-[#2c2c2e] bg-[#fafafc] dark:bg-[#141416]">
+            {/* Error Banner */}
+            {checkoutError && (
+              <div className="mb-4 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2 animate-fade-in">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400" />
+                <span className="flex-1">{checkoutError}</span>
+                <button
+                  type="button"
+                  onClick={() => setCheckoutError(null)}
+                  className="text-rose-500 hover:text-rose-800 dark:hover:text-rose-200 text-base font-bold cursor-pointer"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+
             <div className="space-y-2.5 mb-5 bg-white dark:bg-[#1c1c1e] p-4 rounded-2xl border border-[#d6d6d6]/60 dark:border-[#2c2c2e]">
               <div className="flex justify-between items-center text-[15px]">
                 <span className="text-[#707070] dark:text-[#a1a1a6]">Subtotal</span>
@@ -313,7 +440,7 @@ export default function CartDrawer({
             <button
               onClick={handleCheckout}
               disabled={isCheckingOut}
-              className="btn-electric w-full py-4 text-[16px] font-semibold cursor-pointer shadow-lg shadow-[#0071e3]/20"
+              className="btn-electric w-full py-4 text-[16px] font-semibold cursor-pointer shadow-lg shadow-[#0071e3]/20 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isCheckingOut ? (
                 "Processing Order..."

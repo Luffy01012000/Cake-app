@@ -1,0 +1,11 @@
+--- src/lib/visit-utils.ts
++++ src/lib/visit-utils.ts
+@@ -56,1 +56,1 @@
+-  { name: "DuckDuckBot", regex: /\bduckduck(?:bot|go)\b/i },
++  { name: "DuckDuckBot", regex: /\bduckduckbot(?:-[a-z0-9_-]+)?\b/i },
+@@ -64,1 +64,1 @@
+-  { name: "Pinterestbot", regex: /\bpinterest(?:bot)?\b/i },
++  { name: "Pinterestbot", regex: /\bpinterestbot\b|\bpinterest\/(?:[0-9.]+\s*\(\+http)/i },
+@@ -97,1 +97,1 @@
+-  /\b(?!(?:cu|tal|cha|tur|ab|sa)bot\b)([a-zA-Z0-9_-]+bot|[a-zA-Z0-9_-]*crawler|[a-zA-Z0-9_-]*spider)\b|\b(?:scrape|scraper|spiderbot|webbot)\b/i;
++  /\b(?!(?:cu|tal|cha|tur|ab|sa)bot\b)([a-zA-Z0-9_-]*bot|[a-zA-Z0-9_-]*crawler|[a-zA-Z0-9_-]*spider)\b|\b(?:scrape|scraper|spiderbot|webbot)\b/i;

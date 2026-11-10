@@ -1,0 +1,45 @@
+diff --git a/src/proxy.ts b/src/proxy.ts
+--- a/src/proxy.ts
++++ b/src/proxy.ts
+@@ -10,6 +10,27 @@
+ };
+ 
++/**
++ * Detects whether an incoming HTTP request is a speculative prefetch or prerender request.
++ * Normalizes header values to lowercase and trims whitespace to prevent case-sensitive
++ * bypasses (e.g., "Purpose: Prefetch", "Sec-Purpose: Prefetch", "next-router-prefetch: 1").
++ */
++export function isPrefetchRequest(request: NextRequest): boolean {
++  const nextRouterPrefetch = request.headers.get("next-router-prefetch")?.trim().toLowerCase();
++  const purpose = request.headers.get("purpose")?.trim().toLowerCase();
++  const xPurpose = request.headers.get("x-purpose")?.trim().toLowerCase();
++  const secPurpose = request.headers.get("sec-purpose")?.trim().toLowerCase();
++
++  return (
++    nextRouterPrefetch === "1" ||
++    nextRouterPrefetch === "true" ||
++    purpose === "prefetch" ||
++    purpose === "prerender" ||
++    xPurpose === "prefetch" ||
++    xPurpose === "preview" ||
++    secPurpose === "prefetch" ||
++    secPurpose === "prerender" ||
++    Boolean(secPurpose?.includes("prefetch"))
++  );
++}
++
+ export async function proxy(request: NextRequest, event?: NextFetchEvent): Promise<NextResponse> {
+   try {
+     const pathname = request.nextUrl.pathname;
+@@ -27,11 +48,7 @@
+     // 2. Skip prefetch requests to avoid false positive visit tallies
+-    const isPrefetch =
+-      request.headers.get("next-router-prefetch") === "1" ||
+-      request.headers.get("purpose") === "prefetch" ||
+-      request.headers.get("x-purpose") === "prefetch" ||
+-      request.headers.get("sec-purpose") === "prefetch";
+-
+-    if (isPrefetch) {
++    if (isPrefetchRequest(request)) {
+       return NextResponse.next();
+     }

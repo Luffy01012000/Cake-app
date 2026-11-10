@@ -18,28 +18,29 @@ export default function DatePickerModal({
   onSelectDate,
   title = "Select Event Date",
 }: DatePickerModalProps) {
-  const [todayDateStr, setTodayDateStr] = useState("2026-11-01");
-  const [currentYear, setCurrentYear] = useState(2026);
-  const [currentMonth, setCurrentMonth] = useState(10); // 0-indexed
-  const [tempDate, setTempDate] = useState(selectedDate || "2026-11-01");
-
-  // Sync internal state and compute client-side date boundary inside useEffect
-  React.useEffect(() => {
+  const [todayDateStr] = useState(() => {
     const today = new Date();
     const y = today.getFullYear();
     const m = today.getMonth();
     const d = today.getDate();
-    const todayStr = `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-    setTodayDateStr(todayStr);
+    return `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  });
+  const [prevSelectedDate, setPrevSelectedDate] = useState(selectedDate);
+  const initialValid = selectedDate && selectedDate >= todayDateStr ? selectedDate : todayDateStr;
+  const initialTarget = new Date(initialValid + "T00:00:00");
 
-    if (isOpen) {
-      const validDate = selectedDate && selectedDate >= todayStr ? selectedDate : todayStr;
-      const targetDate = new Date(validDate + "T00:00:00");
-      setCurrentYear(targetDate.getFullYear());
-      setCurrentMonth(targetDate.getMonth());
-      setTempDate(validDate);
-    }
-  }, [isOpen, selectedDate]);
+  const [currentYear, setCurrentYear] = useState(initialTarget.getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(initialTarget.getMonth()); // 0-indexed
+  const [tempDate, setTempDate] = useState(initialValid);
+
+  if (selectedDate !== prevSelectedDate) {
+    setPrevSelectedDate(selectedDate);
+    const validDate = selectedDate && selectedDate >= todayDateStr ? selectedDate : todayDateStr;
+    const targetDate = new Date(validDate + "T00:00:00");
+    setCurrentYear(targetDate.getFullYear());
+    setCurrentMonth(targetDate.getMonth());
+    setTempDate(validDate);
+  }
 
   // Handle Escape key to close modal
   React.useEffect(() => {
