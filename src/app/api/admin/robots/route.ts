@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth";
 import { getRobotsConfig, saveRobotsConfig, getSiteSettings } from "@/lib/data-service";
 import { formatRobotsTxt } from "@/lib/robots-utils";
@@ -30,6 +31,9 @@ export async function PUT(req: NextRequest) {
     const updated = await saveRobotsConfig(data);
     const settings = await getSiteSettings();
     const preview = formatRobotsTxt(updated, settings.siteUrl);
+
+    revalidatePath("/robots.txt");
+    revalidatePath("/admin/robots");
 
     return NextResponse.json({ success: true, config: updated, preview });
   } catch (err: unknown) {

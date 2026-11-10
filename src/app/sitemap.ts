@@ -1,11 +1,12 @@
 import { MetadataRoute } from "next";
-import { getAllCakes, getSiteSettings, getAllPagesSeo } from "@/lib/data-service";
+import { getAllCakes, getSiteSettings, getAllPagesSeo, getCustomSitemapEntries } from "@/lib/data-service";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [cakes, settings, pages] = await Promise.all([
+  const [cakes, settings, pages, customEntries] = await Promise.all([
     getAllCakes(),
     getSiteSettings(),
     getAllPagesSeo(),
+    getCustomSitemapEntries(),
   ]);
 
   const baseUrl = settings.siteUrl.replace(/\/$/, "");
@@ -51,5 +52,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
-  return [...staticEntries, ...cakeEntries];
+  const customSitemapItems: MetadataRoute.Sitemap = (customEntries || [])
+    .filter((entry) => entry.enabled && entry.path)
+    .map((entry) => {
+      const normalizedPath = entry.path.startsWith("/") ? entry.path : `/${entry.path}`;
+      return {
+        url: `${baseUrl}${normalizedPath}`,
+        lastModified: now,
+        changeFrequency: entry.changeFrequency,
+        priority: entry.priority,
+      };
+    });
+
+  return [...staticEntries, ...cakeEntries, ...customSitemapItems];
 }

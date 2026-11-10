@@ -432,6 +432,7 @@ export const SEED_SETTINGS = {
   contactEmail: "concierge@aurapatisserie.com",
   contactPhone: "+1 (800) 555-AURA",
   currency: "USD",
+  customSitemapEntries: "[]",
 };
 
 export interface SeedVisit {
