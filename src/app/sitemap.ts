@@ -52,6 +52,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.85,
   }));
 
+  // Prevent duplicates: custom items should not overwrite or duplicate existing static paths
+  const registeredPaths = new Set(staticEntries.map((e) => e.url));
+
   const customSitemapItems: MetadataRoute.Sitemap = (customEntries || [])
     .filter((entry) => entry.enabled && entry.path)
     .map((entry) => {
@@ -62,7 +65,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: entry.changeFrequency,
         priority: entry.priority,
       };
-    });
+    })
+    .filter((entry) => !registeredPaths.has(entry.url));
 
   return [...staticEntries, ...cakeEntries, ...customSitemapItems];
 }
