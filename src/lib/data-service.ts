@@ -594,7 +594,37 @@ export async function saveRobotsConfig(config: typeof SEED_ROBOTS) {
   return store.robots;
 }
 
-// ----------------- SITE SETTINGS -----------------
+// ----------------- SITE SETTINGS & SITEMAP -----------------
+export interface CustomSitemapEntry {
+  path: string;
+  priority: number;
+  changeFrequency: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never";
+  enabled: boolean;
+}
+
+export async function getCustomSitemapEntries(): Promise<CustomSitemapEntry[]> {
+  const settings = await getSiteSettings();
+  try {
+    const raw = (settings as { customSitemapEntries?: string }).customSitemapEntries;
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (err) {
+    console.error("Error parsing custom sitemap entries:", err);
+  }
+  return [];
+}
+
+export async function saveCustomSitemapEntries(entries: CustomSitemapEntry[]) {
+  const current = await getSiteSettings();
+  const updatedSettings = {
+    ...current,
+    customSitemapEntries: JSON.stringify(entries),
+  };
+  return saveSiteSettings(updatedSettings as typeof SEED_SETTINGS);
+}
+
 export async function getSiteSettings() {
   if (await isDbAvailable()) {
     try {
@@ -610,6 +640,7 @@ export async function getSiteSettings() {
           contactEmail: settings.contactEmail,
           contactPhone: settings.contactPhone,
           currency: settings.currency,
+          customSitemapEntries: settings.customSitemapEntries || "[]",
         };
       }
     } catch (err) {

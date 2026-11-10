@@ -104,6 +104,7 @@ model SiteSettings {
   contactEmail    String   @default("concierge@aurapatisserie.com")
   contactPhone    String   @default("+1 (800) 555-AURA")
   currency        String   @default("USD")
+  customSitemapEntries String? @default("[]")
   updatedAt       DateTime @updatedAt
 }
 

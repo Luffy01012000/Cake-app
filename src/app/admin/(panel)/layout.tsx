@@ -72,8 +72,8 @@ export default async function AdminPanelLayout({
 
   return (
     <div className="min-h-screen bg-[#f5f5f7] dark:bg-[#09090b] text-[#1d1d1f] dark:text-[#f5f5f7] flex transition-colors duration-200">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white dark:bg-[#121215] border-r border-[#e5e5ea] dark:border-[#202025] flex flex-col shrink-0 hidden md:flex">
+      {/* Sidebar - Fixed/Sticky on desktop */}
+      <aside className="w-64 bg-white dark:bg-[#121215] border-r border-[#e5e5ea] dark:border-[#202025] flex flex-col shrink-0 hidden md:flex sticky top-0 h-screen z-30 overflow-y-auto">
         {/* Brand */}
         <div className="h-16 px-6 flex items-center border-b border-[#f0f0f4] dark:border-[#202025]">
           <Link href="/admin" className="flex items-center gap-2">
