@@ -13,6 +13,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { CustomSitemapEntry } from "@/lib/data-service";
+import posthog from "posthog-js";
 
 interface SitemapItemDisplay {
   label: string;
@@ -87,6 +88,10 @@ export default function SitemapManager({
         throw new Error(data.error || "Failed to save sitemap.");
       }
 
+      posthog.capture("sitemap_saved", {
+        custom_entry_count: customEntries.length,
+        enabled_custom_entry_count: customEntries.filter((entry) => entry.enabled && entry.path).length,
+      });
       setStatusMessage({
         type: "success",
         text: "Custom sitemap URLs updated and /sitemap.xml revalidated!",

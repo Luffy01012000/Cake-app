@@ -1,4 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { after, NextRequest, NextResponse } from "next/server";
+import {
+  flushPostHogLogs,
+  logOrderCreationFailed,
+  logOrderCreationStarted,
+  logOrderCreationSucceeded,
+} from "../../../../instrumentation";
 import { createOrder } from "@/lib/data-service";
 
 export async function POST(req: NextRequest) {
@@ -76,6 +82,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  logOrderCreationStarted();
+  after(async () => {
+    await flushPostHogLogs();
+  });
+
   try {
     const order = await createOrder({
       cakeId: cakeId.trim(),
@@ -88,6 +99,7 @@ export async function POST(req: NextRequest) {
       notes: typeof notes === "string" ? notes.trim() : undefined,
     });
 
+    logOrderCreationSucceeded();
     return NextResponse.json(
       {
         success: true,
@@ -96,6 +108,7 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (err: unknown) {
+    logOrderCreationFailed();
     const message = (err as Error).message || "Failed to create order.";
     const isNotFound = message.toLowerCase().includes("not found");
     return NextResponse.json(

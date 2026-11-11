@@ -143,6 +143,7 @@ export default async function AdminPanelLayout({
 
           {/* Right Actions */}
           <AdminHeaderActions
+            userId={session.id}
             userEmail={session.email}
             userName={session.name}
             userRole={session.role}

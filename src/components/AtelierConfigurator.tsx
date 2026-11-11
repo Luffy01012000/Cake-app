@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Sparkles, Check, Calendar, ShieldCheck } from "lucide-react";
 import { CakeProduct, FLAVOR_PALETTES } from "../data/cakes";
+import posthog from "posthog-js";
 import DatePickerModal from "./DatePickerModal";
 
 interface AtelierConfiguratorProps {
@@ -108,6 +109,13 @@ export default function AtelierConfigurator({
       customInscription: inscription,
       flavorChoice: selectedFlavor.name,
       deliveryDate: deliveryDate,
+    });
+    posthog.capture("custom_cake_added_to_cart", {
+      occasion,
+      tiers,
+      flavor: selectedFlavor.name,
+      finish_style: selectedFinish.name,
+      price: calculatedPrice,
     });
 
     setIsSuccess(true);
