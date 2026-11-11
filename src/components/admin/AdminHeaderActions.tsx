@@ -1,15 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogOut, ExternalLink, Loader2, Sun, Moon } from "lucide-react";
+import posthog from "posthog-js";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function AdminHeaderActions({
+  userId,
   userEmail,
   userName,
   userRole,
 }: {
+  userId: string;
   userEmail: string;
   userName: string;
   userRole: string;
@@ -18,10 +21,19 @@ export default function AdminHeaderActions({
   const [loggingOut, setLoggingOut] = useState(false);
   const { isDarkMode, toggleDarkMode } = useTheme();
 
+  useEffect(() => {
+    posthog.identify(userId, {
+      email: userEmail,
+      name: userName,
+      role: userRole,
+    });
+  }, [userEmail, userId, userName, userRole]);
+
   const handleLogout = async () => {
     setLoggingOut(true);
     try {
       await fetch("/api/auth/logout", { method: "POST" });
+      posthog.reset();
       router.push("/admin/login");
       router.refresh();
     } catch (err) {

@@ -17,6 +17,7 @@ import {
   Mail,
 } from "lucide-react";
 import { CartItem } from "../data/cakes";
+import posthog from "posthog-js";
 import DatePickerModal from "./DatePickerModal";
 
 interface CartDrawerProps {
@@ -129,6 +130,13 @@ export default function CartDrawer({
       }
 
       // Success: clear cart and transition to confirmation view
+      posthog.capture("order_placed", {
+        order_count: createdOrderIds.length,
+        item_count: items.reduce((count, item) => count + item.quantity, 0),
+        subtotal,
+        courier_fee: courierFee,
+        total: grandTotal,
+      });
       onClearCart();
       setConfirmedOrderId(
         createdOrderIds.join(", ") || `AUR-${Date.now().toString().slice(-6)}`

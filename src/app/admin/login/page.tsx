@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Lock, Mail, ShieldAlert, ArrowRight, Loader2, Sparkles, Key, Sun, Moon } from "lucide-react";
+import posthog from "posthog-js";
 import { useTheme } from "@/context/ThemeContext";
 
 export default function AdminLoginPage() {
@@ -30,6 +31,24 @@ export default function AdminLoginPage() {
       if (!res.ok) {
         throw new Error(data.error || "Authentication failed.");
       }
+
+      const user = data.user;
+      if (
+        !user ||
+        typeof user.id !== "string" ||
+        typeof user.email !== "string" ||
+        typeof user.name !== "string" ||
+        typeof user.role !== "string"
+      ) {
+        throw new Error("Authentication response did not include a valid user identity.");
+      }
+
+      posthog.identify(user.id, {
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      });
+      posthog.capture("admin_login_succeeded");
 
       router.push("/admin");
       router.refresh();

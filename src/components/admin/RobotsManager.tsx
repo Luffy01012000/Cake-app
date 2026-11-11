@@ -13,6 +13,7 @@ import {
   FileCode,
 } from "lucide-react";
 import { formatRobotsTxt, RobotsConfigData } from "@/lib/robots-utils";
+import posthog from "posthog-js";
 
 interface RobotsManagerProps {
   initialConfig: RobotsConfigData;
@@ -69,6 +70,10 @@ export default function RobotsManager({
         throw new Error(data.error || "Save failed.");
       }
 
+      posthog.capture("robots_settings_saved", {
+        allowed_crawler_count: Object.values(config).filter((value) => value === true).length,
+        has_custom_rules: Boolean(config.customRules),
+      });
       setStatusMessage({
         type: "success",
         text: "Dynamic robots.txt directives and AI crawler permissions updated!",

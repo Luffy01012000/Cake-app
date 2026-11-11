@@ -17,6 +17,7 @@ import {
   Truck,
 } from "lucide-react";
 import { CakeWithFaqs } from "@/lib/data-service";
+import posthog from "posthog-js";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -35,6 +36,13 @@ export default function CakeDetailClient({
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const handleAddToCart = () => {
+    posthog.capture("cake_added_to_cart", {
+      cake_id: cake.id,
+      occasion: cake.occasion,
+      price: cake.price,
+      selected_flavor: selectedFlavor,
+      source: "cake_detail",
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 2500);
   };

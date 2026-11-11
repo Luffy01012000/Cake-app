@@ -25,6 +25,7 @@ import {
   generateFaqJsonLd,
 } from "@/lib/seo-utils";
 import { CakeWithFaqs } from "@/lib/data-service";
+import posthog from "posthog-js";
 
 interface CakeFormProps {
   initialCake?: Partial<CakeWithFaqs>;
@@ -203,6 +204,13 @@ export default function CakeForm({
         throw new Error(data.error || "Save failed.");
       }
 
+      posthog.capture("cake_saved", {
+        action: isNew ? "created" : "updated",
+        cake_id: data.cake.id,
+        occasion,
+        price: Number(price),
+        faq_count: faqs.length,
+      });
       setStatusMessage({ type: "success", text: "Cake and SEO metadata updated successfully!" });
       setTimeout(() => setStatusMessage(null), 4000);
 
@@ -227,6 +235,9 @@ export default function CakeForm({
         method: "DELETE",
       });
       if (!res.ok) throw new Error("Delete failed.");
+      posthog.capture("cake_deleted", {
+        cake_id: initialCake?.id || slug,
+      });
       router.push("/admin/cakes");
       router.refresh();
     } catch (err: unknown) {

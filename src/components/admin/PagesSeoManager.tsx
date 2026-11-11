@@ -17,6 +17,7 @@ import GoogleSerpPreview from "./GoogleSerpPreview";
 import FaqRepeater, { FaqItem } from "./FaqRepeater";
 import JsonLdPreview from "./JsonLdPreview";
 import { SeedPageSeo } from "@/lib/seed-data";
+import posthog from "posthog-js";
 
 interface PagesSeoManagerProps {
   initialPages: SeedPageSeo[];
@@ -101,6 +102,11 @@ export default function PagesSeoManager({ initialPages }: PagesSeoManagerProps) 
       setPages((prev) =>
         prev.map((p) => (p.path === selectedPath ? data.page : p))
       );
+      posthog.capture("page_seo_saved", {
+        page_path: selectedPath,
+        no_index: noIndex,
+        faq_count: faqs.length,
+      });
       setStatusMessage({ type: "success", text: `SEO for "${selectedPath}" saved successfully!` });
       setTimeout(() => setStatusMessage(null), 4000);
       router.refresh();

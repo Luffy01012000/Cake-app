@@ -14,6 +14,7 @@ import {
   Lock,
   User,
 } from "lucide-react";
+import posthog from "posthog-js";
 
 interface UserItem {
   id: string;
@@ -62,6 +63,7 @@ export default function UsersManager({
       }
 
       setUsers((prev) => [...prev, data.user]);
+      posthog.capture("team_member_created", { role: data.user.role });
       setStatusMessage({ type: "success", text: `User "${data.user.email}" created successfully!` });
       setName("");
       setEmail("");
@@ -75,7 +77,7 @@ export default function UsersManager({
     }
   };
 
-  const handleDeleteUser = async (id: string, userEmail: string) => {
+  const handleDeleteUser = async (id: string, userEmail: string, userRole: UserItem["role"]) => {
     if (!confirm(`Are you sure you want to remove user "${userEmail}"?`)) return;
 
     try {
@@ -89,6 +91,7 @@ export default function UsersManager({
       }
 
       setUsers((prev) => prev.filter((u) => u.id !== id));
+      posthog.capture("team_member_deleted", { role: userRole });
       setStatusMessage({ type: "success", text: `User "${userEmail}" removed.` });
     } catch (err: unknown) {
       alert((err as Error).message);
@@ -306,7 +309,7 @@ export default function UsersManager({
                       {!isCurrent ? (
                         <button
                           type="button"
-                          onClick={() => handleDeleteUser(u.id, u.email)}
+                          onClick={() => handleDeleteUser(u.id, u.email, u.role)}
                           className="p-1.5 text-gray-400 dark:text-neutral-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors cursor-pointer"
                           title="Remove user"
                         >
